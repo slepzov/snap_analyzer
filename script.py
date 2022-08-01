@@ -6,6 +6,7 @@ SNAP_NAME = sys.argv[1]
 SERIAL_NUMBER = ""
 DIRECTORY_NAME = SNAP_NAME[:-4]
 CODE_LEVEL = ""
+ID_CONTROL = ""
 
 if __name__ == "__main__":
     with tarfile.open(SNAP_NAME) as tar:
@@ -40,10 +41,12 @@ with open(DIRECTORY_NAME + "\dumps\\" + INTERNALSTORAGE) as f:
             if len(svcinfo_lsenclosure) == 9:
                 TYPE = svcinfo_lsenclosure[3]
                 SERIAL_NUMBER = svcinfo_lsenclosure[4]
+                ID_CONTROL = svcinfo_lsenclosure[0]
                 break
             else:
                 TYPE = svcinfo_lsenclosure[6]
                 SERIAL_NUMBER = svcinfo_lsenclosure[7]
+                ID_CONTROL = svcinfo_lsenclosure[0]
                 break
 
 with open(DIRECTORY_NAME + "\dumps\\" + MACHINENODEINFO) as f:
@@ -68,11 +71,26 @@ with open(DIRECTORY_NAME + "\dumps\\" + INTERNALSTORAGE) as f:
     log = f.read().split("svcinfo")
 
 number_enclosure = ""
+dict_id_enclosure = {}
 
 for svcinfo_box in log:
     if "lsenclosure -delim" in svcinfo_box:
-       # print(svcinfo_box.strip().split("\n"))
         number_enclosure = len(svcinfo_box.strip().split("\n")[2:])
+        for line in svcinfo_box.strip().split("\n")[2:]:
+            dict_id_enclosure[line.split(":")[0]] = line.split(":")[2]
         break
-
+print(dict_id_enclosure)
 print(f"Количество полок: {number_enclosure}")
+
+
+
+def parse_expansion(id, log):
+    for svcinfo_box in log:
+        if ("lsenclosure -delim : " + id) in svcinfo_box:
+            print(svcinfo_box)
+        #    for line in svcinfo_box.strip().split("\n")[2:]:
+         #       dict_id_enclosure[line.split(":")[0]] = line.split(":")[2]
+            break
+
+parse_expansion("2", log)
+
