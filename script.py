@@ -36,9 +36,15 @@ TYPE = ""
 with open(DIRECTORY_NAME + "\dumps\\" + INTERNALSTORAGE) as f:
     for line in f:
         if ":control:" in line:
-            TYPE = line.split(":")[6]
-            SERIAL_NUMBER = line.split(":")[7]
-            break
+            svcinfo_lsenclosure = line.split(":")
+            if len(svcinfo_lsenclosure) == 9:
+                TYPE = svcinfo_lsenclosure[3]
+                SERIAL_NUMBER = svcinfo_lsenclosure[4]
+                break
+            else:
+                TYPE = svcinfo_lsenclosure[6]
+                SERIAL_NUMBER = svcinfo_lsenclosure[7]
+                break
 
 with open(DIRECTORY_NAME + "\dumps\\" + MACHINENODEINFO) as f:
     for line in f:
@@ -56,3 +62,17 @@ print(f"Type: {TYPE}")
 print(f"Серийный номер СХД: {SERIAL_NUMBER}")
 print(f"Code level: {CODE_LEVEL}")
 print(f"Timestamp: {date_timestamp} {time_timestamp}")
+
+
+with open(DIRECTORY_NAME + "\dumps\\" + INTERNALSTORAGE) as f:
+    log = f.read().split("svcinfo")
+
+number_enclosure = ""
+
+for svcinfo_box in log:
+    if "lsenclosure -delim" in svcinfo_box:
+       # print(svcinfo_box.strip().split("\n"))
+        number_enclosure = len(svcinfo_box.strip().split("\n")[2:])
+        break
+
+print(f"Количество полок: {number_enclosure}")
