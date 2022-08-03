@@ -82,15 +82,48 @@ for svcinfo_box in log:
 print(dict_id_enclosure)
 print(f"Количество полок: {number_enclosure}")
 
-
-
 def parse_expansion(id, log):
+    expansion_dict = {"id":id, "temperature": "", "total_PSUs": "2"}
     for svcinfo_box in log:
         if ("lsenclosure -delim : " + id) in svcinfo_box:
-            print(svcinfo_box)
-        #    for line in svcinfo_box.strip().split("\n")[2:]:
-         #       dict_id_enclosure[line.split(":")[0]] = line.split(":")[2]
+            #print(svcinfo_box.strip().split("\n"))
+            for parametr in svcinfo_box.strip().split("\n"):
+                if "product_MTM:" in parametr:
+                    expansion_dict["product_MTM"] = parametr.split(":")[1]
+                if "serial_number:" in parametr:
+                    expansion_dict["serial_number"] = parametr.split(":")[1]
+                if "ambient_temperature:" in parametr:
+                    expansion_dict["temperature"] = parametr.split(":")[1]
+                if "status:" in parametr:
+                    expansion_dict["status"] = parametr.split(":")[1]
+                if "type:" in parametr:
+                    expansion_dict["type"] = parametr.split(":")[1]
+                if "total_PSUs:" in parametr:
+                    expansion_dict["total_PSUs"] = parametr.split(":")[1]
+                if "online_PSUs:" in parametr:
+                    expansion_dict["online_PSUs"] = parametr.split(":")[1]
+                if "drive_slots:" in parametr:
+                    expansion_dict["drive_slots"] = parametr.split(":")[1]
+                if "fault_LED:" in parametr:
+                    expansion_dict["fault_LED"] = parametr.split(":")[1]
+                if "identify_LED:" in parametr:
+                    expansion_dict["identify_LED"] = parametr.split(":")[1]
+                if "total_canisters:" in parametr:
+                    expansion_dict["total_canisters"] = parametr.split(":")[1]
+                if "online_canisters:" in parametr:
+                    expansion_dict["online_canisters"] = parametr.split(":")[1]
             break
+    return expansion_dict
 
-parse_expansion("2", log)
+for key in dict_id_enclosure:
+    polka = parse_expansion(key, log)
+    print("___________________________________________________________________________________")
+    print("id: " + polka["id"])
+    print("Enc_type: " + polka["product_MTM"] + "(" + polka["type"] + ")")
+    print("SN: " + polka["serial_number"])
+    print("Status: " + polka["status"])
+    print("Temperature: " + polka["temperature"])
+    print("Nodes: " + polka["total_canisters"] + "/" + polka["online_canisters"])
+    print("PSUs: " + polka["online_PSUs"] + "/" + polka["total_PSUs"])
+
 
