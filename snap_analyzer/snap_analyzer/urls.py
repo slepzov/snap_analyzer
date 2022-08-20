@@ -19,5 +19,6 @@ from snap_analyzer_django import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home)
+    path('', views.upload),
+    path('parser/', views.parser)
 ]
