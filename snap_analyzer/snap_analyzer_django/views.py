@@ -1,4 +1,7 @@
+import os
 import shutil
+import stat
+
 
 from django.shortcuts import render
 from django.conf import settings
@@ -25,7 +28,6 @@ def parser(request):
 def pars(name):
     import tarfile
     import sys
-    import os
 
     SNAP_NAME = name
     SERIAL_NUMBER = ""
@@ -153,6 +155,12 @@ def pars(name):
         # print("Temperature: " + polka["temperature"])
         # print("Nodes: " + polka["total_canisters"] + "/" + polka["online_canisters"])
         # print("PSUs: " + polka["online_PSUs"] + "/" + polka["total_PSUs"])
+
     os.remove(SNAP_NAME)
-    shutil.rmtree(DIRECTORY_NAME, ignore_errors=True)
+    shutil.rmtree(DIRECTORY_NAME, onerror=removeReadOnly)
     return general_information
+
+
+def removeReadOnly(func, path, excinfo):
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
