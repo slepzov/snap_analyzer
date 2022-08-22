@@ -92,9 +92,7 @@ def pars(name):
     # print(f"Code level: {CODE_LEVEL}")
     # print(f"Timestamp: {date_timestamp} {time_timestamp}")
 
-    general_information = {'product_name': PRODUCT_NAME, 'type': TYPE,
-                           'serial_number': SERIAL_NUMBER, 'code_level': CODE_LEVEL,
-                           'date_timestamp': time_timestamp}
+
 
     with open(DIRECTORY_NAME + "\dumps\\" + INTERNALSTORAGE) as f:
         log = f.read().split("svcinfo")
@@ -111,6 +109,10 @@ def pars(name):
 
     # print(dict_id_enclosure)
     # print(f"Количество полок: {number_enclosure}")
+
+    general_information = {'product_name': PRODUCT_NAME, 'type': TYPE,
+                           'serial_number': SERIAL_NUMBER, 'code_level': CODE_LEVEL,
+                           'date_timestamp': time_timestamp, 'number_of_enclosure': number_enclosure}
 
     def parse_expansion(id, log):
         expansion_dict = {"id": id, "temperature": "", "total_PSUs": "2"}
