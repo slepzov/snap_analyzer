@@ -2,10 +2,13 @@ import os
 import shutil
 import stat
 
-
 from django.shortcuts import render
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from rest_framework.viewsets import ModelViewSet
+
+from snap_analyzer_django.models import GeneralCluster
+from snap_analyzer_django.serializers import ClusterSerializer
 
 
 def upload(request):
@@ -19,6 +22,11 @@ def upload(request):
             'uploaded_file_url': uploaded_file_url, 'general_information': general_information,
         })
     return render(request, 'snap_analyzer_django/upload.html')
+
+
+class ClusterView(ModelViewSet):
+    queryset = GeneralCluster.objects.all()
+    serializer_class = ClusterSerializer
 
 
 def parser(request):
@@ -84,6 +92,8 @@ def pars(name):
     date_timestamp = SAOUT.split(".")[-2][4:] + "." + SAOUT.split(".")[-2][2:4] + "." + "20" + SAOUT.split(".")[-2][0:2]
     time_timestamp = SAOUT.split(".")[-1][0:2] + ":" + SAOUT.split(".")[-1][2:4] + ":" + SAOUT.split(".")[-1][4:]
 
+    timestamp = date_timestamp + ' ' + time_timestamp
+
     # print(f"Главный файл = {INTERNALSTORAGE}")
     # print(f"saout файл = {SAOUT}")
     # print(f"Product_name: {PRODUCT_NAME}")
@@ -91,8 +101,6 @@ def pars(name):
     # print(f"Серийный номер СХД: {SERIAL_NUMBER}")
     # print(f"Code level: {CODE_LEVEL}")
     # print(f"Timestamp: {date_timestamp} {time_timestamp}")
-
-
 
     with open(DIRECTORY_NAME + "\dumps\\" + INTERNALSTORAGE) as f:
         log = f.read().split("svcinfo")
@@ -112,7 +120,17 @@ def pars(name):
 
     general_information = {'product_name': PRODUCT_NAME, 'type': TYPE,
                            'serial_number': SERIAL_NUMBER, 'code_level': CODE_LEVEL,
-                           'date_timestamp': time_timestamp, 'number_of_enclosure': number_enclosure}
+                           'date_timestamp': timestamp, 'number_of_enclosure': number_enclosure}
+
+    cluster = GeneralCluster(
+        serial_number_cluster=SERIAL_NUMBER,
+        date_timestamp=timestamp,
+        product_name=PRODUCT_NAME,
+        type=TYPE,
+        code_level=CODE_LEVEL,
+        number_of_enclosure=number_enclosure
+    )
+    cluster.save()
 
     def parse_expansion(id, log):
         expansion_dict = {"id": id, "temperature": "", "total_PSUs": "2"}

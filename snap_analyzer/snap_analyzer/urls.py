@@ -15,10 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework.routers import SimpleRouter
+
 from snap_analyzer_django import views
+from snap_analyzer_django.views import ClusterView
+
+router = SimpleRouter()
+
+router.register('api/clusters', ClusterView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.upload),
     path('parser/', views.parser)
 ]
+
+urlpatterns += router.urls

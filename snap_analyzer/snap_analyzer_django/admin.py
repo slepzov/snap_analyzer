@@ -1,3 +1,4 @@
 from django.contrib import admin
+from snap_analyzer_django.models import GeneralCluster
 
-# Register your models here.
+admin.site.register(GeneralCluster)
