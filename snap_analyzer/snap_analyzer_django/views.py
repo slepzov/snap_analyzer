@@ -18,7 +18,7 @@ def upload(request):
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = fs.url(filename)
         general_information = pars(filename)
-        return render(request, 'snap_analyzer_django/parser.html', {
+        return render(request, 'snap_analyzer_django/main_app.html', {
             'uploaded_file_url': uploaded_file_url, 'general_information': general_information,
         })
     return render(request, 'snap_analyzer_django/upload.html')
@@ -30,7 +30,11 @@ class ClusterView(ModelViewSet):
 
 
 def parser(request):
-    return render(request, 'snap_analyzer_django/parser.html')
+    return render(request, 'snap_analyzer_django/main_app.html')
+
+
+def orders_app(request):
+    return render(request, 'snap_analyzer_django/main_app.html')
 
 
 def pars(name):

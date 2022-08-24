@@ -26,8 +26,9 @@ router.register('api/clusters', ClusterView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.upload),
-    path('parser/', views.parser)
+    path('', views.orders_app),
+    path('parser/', views.parser),
+    path('upload/', views.upload)
 ]
 
 urlpatterns += router.urls
