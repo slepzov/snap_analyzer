@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SNAP analyzer</title>
-</head>
-<body>
+{% extends 'snap_analyzer_django/base.html' %}
+
+{% block content %}
 <h1>Upload snap file</h1>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <input type="file" name="myfile">
     <button type="submit">Upload</button>
   </form>
-</body>
-</html>
+
+{% endblock %}
