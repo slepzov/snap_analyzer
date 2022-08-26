@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from rest_framework.viewsets import ModelViewSet
 
-from snap_analyzer_django.models import GeneralCluster
+from snap_analyzer_django.models import GeneralCluster, EnclosureModel
 from snap_analyzer_django.serializers import ClusterSerializer
 
 
@@ -136,8 +136,9 @@ def pars(name):
     )
     cluster.save()
 
-    def parse_expansion(id, log):
-        expansion_dict = {"id": id, "temperature": "", "total_PSUs": "2"}
+    def parse_expansion(id, log, SERIAL_NUMBER, timestamp):
+        expansion_dict = {"serial_number_cluster": SERIAL_NUMBER, "date_timestamp": timestamp, "id": id,
+                          "temperature": "", "total_PSUs": "2"}
         for svcinfo_box in log:
             if ("lsenclosure -delim : " + id) in svcinfo_box:
                 # print(svcinfo_box.strip().split("\n"))
@@ -170,7 +171,25 @@ def pars(name):
         return expansion_dict
 
     for key in dict_id_enclosure:
-        polka = parse_expansion(key, log)
+        polka = parse_expansion(key, log, SERIAL_NUMBER, timestamp)
+        enclosure = EnclosureModel(
+            serial_number_cluster=polka["serial_number_cluster"],
+            date_timestamp=polka["date_timestamp"],
+            id_enclosure=polka["id"],
+            type=polka["type"],
+            temperature=polka["temperature"],
+            total_PSUs=polka["total_PSUs"],
+            product_MTM_enclosure=polka["product_MTM"],
+            serial_number_enclosure=polka["serial_number"],
+            status_enclosure=polka["status"],
+            online_PSUs=polka["online_PSUs"],
+            drive_slots=polka["drive_slots"],
+            fault_LED=polka["fault_LED"],
+            identify_LED=polka["identify_LED"],
+            total_canisters=polka["total_canisters"],
+            online_canisters=polka["online_canisters"],
+        )
+        enclosure.save()
         # print("___________________________________________________________________________________")
         # print("id: " + polka["id"])
         # print("Enc_type: " + polka["product_MTM"] + "(" + polka["type"] + ")")
