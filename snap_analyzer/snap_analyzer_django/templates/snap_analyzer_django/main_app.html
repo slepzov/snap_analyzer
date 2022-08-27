@@ -9,8 +9,9 @@
         mtm	sn	codelevel	timestamp
     </div>
 
-    <div class="btn btn-light btn-lg btn-block" v-for="cluster in clusters">
-        {{ cluster.type }} {{ cluster.serial_number_cluster }} {{ cluster.code_level }} {{ cluster.date_timestamp }}
+    <div class="btn btn-light btn-lg btn-block" v-for="cluster in clusters ">
+
+       {{ cluster.id }} {{ cluster.type }} {{ cluster.serial_number_cluster }} {{ cluster.code_level }} {{ cluster.date_timestamp }}
 
     </div>
 

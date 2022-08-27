@@ -11,4 +11,5 @@ class ClusterSerializer(ModelSerializer):
                   'product_name',
                   'type',
                   'code_level',
-                  'number_of_enclosure']
+                  'number_of_enclosure',
+                  'id']

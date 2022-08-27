@@ -2,7 +2,7 @@ import os
 import shutil
 import stat
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from rest_framework.viewsets import ModelViewSet
@@ -207,3 +207,8 @@ def pars(name):
 def removeReadOnly(func, path, excinfo):
     os.chmod(path, stat.S_IWRITE)
     func(path)
+
+
+def detail(request, blog_id):
+    blog = get_object_or_404(GeneralCluster, pk=blog_id)
+    return render(request, 'snap_analyzer_django/detail.html', {'blog': blog})

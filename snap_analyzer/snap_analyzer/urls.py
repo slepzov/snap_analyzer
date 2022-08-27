@@ -20,6 +20,8 @@ from rest_framework.routers import SimpleRouter
 from snap_analyzer_django import views
 from snap_analyzer_django.views import ClusterView
 
+app_name = 'blog'
+
 router = SimpleRouter()
 
 router.register('api/clusters', ClusterView)
@@ -28,7 +30,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.orders_app, name='home'),
     path('parser/', views.parser),
-    path('upload/', views.upload, name='upload')
+    path('upload/', views.upload, name='upload'),
+    path('<int:blog_id>/', views.detail, name='detail'),
 ]
 
 urlpatterns += router.urls
