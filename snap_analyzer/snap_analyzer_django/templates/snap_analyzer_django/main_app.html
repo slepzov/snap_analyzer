@@ -2,21 +2,22 @@
 
 {% block content %}
 
-{% verbatim %}
-<div class="container" id="analyzer_app">
+
+<div>
 
     <div class="btn btn-primary btn-lg btn-block">
         mtm	sn	codelevel	timestamp
     </div>
 
-    <div class="btn btn-light btn-lg btn-block" v-for="cluster in clusters ">
+    {% for cluster in clusters %}
+    <a href="{% url 'detail' cluster.id %}" class="btn btn-light btn-lg btn-block">
 
-       {{ cluster.id }} {{ cluster.type }} {{ cluster.serial_number_cluster }} {{ cluster.code_level }} {{ cluster.date_timestamp }}
+        {{ cluster.type }} {{ cluster.serial_number_cluster }} {{ cluster.code_level }} {{ cluster.date_timestamp }}
 
-    </div>
-
+    </a>
+    {% endfor %}
 </div>
-{% endverbatim %}
+
 
 
 {% endblock %}

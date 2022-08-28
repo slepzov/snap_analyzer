@@ -30,11 +30,13 @@ class ClusterView(ModelViewSet):
 
 
 def parser(request):
-    return render(request, 'snap_analyzer_django/main_app.html')
+    clusters = GeneralCluster.objects.all()
+    return render(request, 'snap_analyzer_django/main_app.html', {'clusters': clusters})
 
 
 def orders_app(request):
-    return render(request, 'snap_analyzer_django/main_app.html')
+    clusters = GeneralCluster.objects.all()
+    return render(request, 'snap_analyzer_django/main_app.html', {'clusters': clusters})
 
 
 def pars(name):
