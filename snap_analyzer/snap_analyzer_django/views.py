@@ -213,4 +213,5 @@ def removeReadOnly(func, path, excinfo):
 
 def detail(request, blog_id):
     blog = get_object_or_404(GeneralCluster, pk=blog_id)
-    return render(request, 'snap_analyzer_django/detail.html', {'blog': blog})
+    enclosures = EnclosureModel.objects.all().filter(serial_number_cluster=blog.serial_number_cluster).filter(date_timestamp=blog.date_timestamp)
+    return render(request, 'snap_analyzer_django/detail.html', {'blog': blog, 'enclosures': enclosures})

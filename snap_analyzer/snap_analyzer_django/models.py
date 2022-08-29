@@ -26,3 +26,4 @@ class EnclosureModel(models.Model):
     identify_LED = models.CharField(max_length=40)
     total_canisters = models.CharField(max_length=40)
     online_canisters = models.CharField(max_length=40)
+    cluster = models.ForeignKey(GeneralCluster, on_delete=models.CASCADE, null=True)
