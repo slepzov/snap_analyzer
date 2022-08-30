@@ -2,23 +2,170 @@
 
 {% block content %}
 
-Product_name : {{ blog.product_name }} <br>
-Type : {{ blog.type }} <br>
-Serial number : {{ blog.serial_number_cluster }} <br>
-Code level : {{ blog.code_level }} <br>
-Timestamp :	{{ blog.date_timestamp }} <br>
+<style>
+.bd-sidebar {
+  order: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  border-right: 1px solid rgba(0, 0, 0, .1);
+}
+</style>
 
-<br>
-<br>
-Hardware: <br>
+<div class="container-fluid">
+    <div class="row flex-xl-nowrap">
+        <div class="col-md-3 bd-sidebar">
+            <nav class="sticky-top">
+            <table>
+                <tr>
+                    <td align='right'>Product_name :</td>
+                    <td>&nbsp;{{ blog.product_name }}</td>
+                </tr>
+                <tr>
+                    <td align='right'>Type :</td>
+                    <td>&nbsp;{{ blog.type }}</td>
+                </tr>
+                <tr>
+                    <td align='right'>Serial number :</td>
+                    <td>&nbsp;{{ blog.serial_number_cluster }}</td>
+                </tr>
+                <tr>
+                    <td align='right'>Code level :</td>
+                    <td>&nbsp;{{ blog.code_level }}</td>
+                </tr>
+                <tr>
+                    <td align='right'>Timestamp :</td>
+                    <td>&nbsp;{{ blog.date_timestamp }}</td>
+                </tr>
+            </table>
+            <br>
+            <table>
+                <tr><td colspan="2"> Snap history:</td></tr>
+    			<tr style="cursor: pointer;"  class="text-danger"  onclick="location.href='unit?id=63087301db3965fe757e33bc'">
+        		<td class='col-1' nowrap>8.2.1.8</td>
+        		<td class='col-1' nowrap>2022.08.26 09:40:41</td>
+    			</tr>
+
+            </table>
+            </nav>
+        </div>
+
 {% for enclosure in enclosures %}
-_____________________________________________________________________________________________________<br>
-id : {{ enclosure.id_enclosure }}   Enc_type : {{ enclosure.product_MTM_enclosure }}({{ enclosure.type }}) <br>
-Sn : {{ enclosure.serial_number_enclosure }} Status : {{ enclosure.status_enclosure }} Temperature : {{ enclosure.temperature }}  <br>
-Nodes : {{ enclosure.online_canisters }}/{{ enclosure.total_canisters }} PSUs : {{ enclosure.online_PSUs }}/{{ enclosure.total_PSUs }} <br>
-Drive slots : {{ enclosure.drive_slots }} <br>
+        <table align="center">
+            <tr>
+                <td>
+                    id : {{ enclosure.id_enclosure }}
+                </td>
+                <td>
+                    Enc_type : {{ enclosure.product_MTM_enclosure }}({{ enclosure.type }})<br> Sn : {{ enclosure.serial_number_enclosure }}
+                </td>
+                <td  class="text-success" >
+                    Status : {{ enclosure.status_enclosure }}
+                </td>
+                <td>
+                    Temperature : {{ enclosure.temperature }}
+                </td>
+            </tr>
+
+            <tr><td colspan="4">
+                <table align=center><tr>
+
+                </tr></table>
+            </td></tr>
+
+            <tr><td colspan="4" align="center">
+                <!-- <table border=1><tr> -->
+
+                <!-- </tr> -->
+                <!-- <tr> -->
+
+                <!-- </tr></table> -->
+
+              <table border=1><tr>
+
+                    <td bgcolor="#DDDDDD" align='center' width='30'>1</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>2</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>3</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>4</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>5</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>6</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>7</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>8</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>9</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>10</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>11</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>12</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>13</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>14</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>15</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>16</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>17</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>18</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>19</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>20</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>21</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>22</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>23</td>
+                    <td bgcolor="#DDDDDD" align='center' width='30'>24</td>
+
+                 </tr><tr>
 
 
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">12</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">5</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">17</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">36</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">37</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">16</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">10</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">18</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">13</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">8</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">15</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">46</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">9</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">21</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">44</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">47</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">35</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">38</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">40</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">11</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">6</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">45</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">22</a></td>
+                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">29</a></td>
+
+                 </tr><tr>
+                 </tr><tr>
+                 </tr><tr>
+             </tr></table>
+            </td></tr>
+
+            <tr>
+                <td>
+                    Nodes : {{ enclosure.online_canisters }}/{{ enclosure.total_canisters }}
+                </td>
+                <td>
+                    PSUs : {{ enclosure.online_PSUs }}/{{ enclosure.total_PSUs }}
+                </td>
+                <td>
+                    Battery : 0/0
+                </td>
+            </td></tr>
+            <tr><td colspan="4">
+
+                    Drive types :<br>
+                    <table>
+                        <tr>
+                        <td width="120">02PX588</td><td width="120"> 1.09TB </td><td width="120"> sas</td>
+                        </tr>
+                    </table>
+            </td></tr>
+    </table>
+<br>
+
+        </div>
+    </div>
+</div>
 {% endfor %}
 
 {% endblock %}
