@@ -64,13 +64,39 @@
                     Temperature : {{ enclosure.temperature }}
                 </td>
             </tr>
-
-            <tr><td colspan="4">
+    {% if enclosure.type == "control" %}
+   <tr><td colspan="4">
                 <table align=center><tr>
+
+
+                <td>
+                    <table border="1">
+                        <tr onclick="window.open('node_info?id=63087301db3965fe757e33bc&node_id=1','_blank')">
+                            <td colspan=2 width="240" align="center" bgcolor="#DDDDDD">node1</td>
+                        </tr><tr onclick="window.open('node_info?id=63087301db3965fe757e33bc&node_id=1','_blank')">
+                            <td width="120" align="center"  class="bg-success" >online</td>
+                            <td width="120" align="center">172.21.0.28</td>
+                        </tr>
+                    </table>
+                </td>
+
+
+
+                <td>
+                    <table border="1">
+                        <tr onclick="window.open('node_info?id=63087301db3965fe757e33bc&node_id=2','_blank')">
+                            <td colspan=2 width="240" align="center" bgcolor="#DDDDDD">node2</td>
+                        </tr><tr onclick="window.open('node_info?id=63087301db3965fe757e33bc&node_id=2','_blank')">
+                            <td width="120" align="center"  class="bg-success" >online</td>
+                            <td width="120" align="center">172.21.0.27</td>
+                        </tr>
+                    </table>
+                </td>
+
 
                 </tr></table>
             </td></tr>
-
+        {% endif %}
             <tr><td colspan="4" align="center">
                 <!-- <table border=1><tr> -->
 
