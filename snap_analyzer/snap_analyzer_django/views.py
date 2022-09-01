@@ -55,6 +55,7 @@ def pars(name):
     INTERNALSTORAGE = ""
     SAOUT = ""
     MACHINENODEINFO = ""
+    SVCOUT = ""
 
     files = os.listdir(DIRECTORY_NAME + "\dumps")
     for file_name in files:
@@ -64,6 +65,8 @@ def pars(name):
             SAOUT = file_name
         if "machinenodeinfo" in file_name:
             MACHINENODEINFO = file_name
+        if "svcout." + DIRECTORY_NAME.split(".")[1] in file_name:
+            SVCOUT = file_name
 
     PRODUCT_NAME = ""
     with open(DIRECTORY_NAME + "\dumps\\" + SAOUT) as f:
@@ -111,6 +114,9 @@ def pars(name):
     with open(DIRECTORY_NAME + "\dumps\\" + INTERNALSTORAGE) as f:
         log = f.read().split("svcinfo")
 
+    with open(DIRECTORY_NAME + "\dumps\\" + SVCOUT) as f:
+        log_svcout = f.read().split("svcinfo")
+
     number_enclosure = ""
     dict_id_enclosure = {}
 
@@ -138,9 +144,9 @@ def pars(name):
     )
     cluster.save()
 
-    def parse_expansion(id, log, SERIAL_NUMBER, timestamp):
+    def parse_expansion(id, log, log_svcout, SERIAL_NUMBER, timestamp):
         expansion_dict = {"serial_number_cluster": SERIAL_NUMBER, "date_timestamp": timestamp, "id": id,
-                          "temperature": "", "total_PSUs": "2"}
+                          "temperature": "", "total_PSUs": "2", "name_node_id_1": "SSS"}
         for svcinfo_box in log:
             if ("lsenclosure -delim : " + id) in svcinfo_box:
                 # print(svcinfo_box.strip().split("\n"))
@@ -170,10 +176,18 @@ def pars(name):
                     if "online_canisters:" in parametr:
                         expansion_dict["online_canisters"] = parametr.split(":")[1]
                 break
+
+        if expansion_dict["type"] == "control":
+            for svcinfo_box in log_svcout:
+                if "lsnode -delim : " in svcinfo_box and "id:1" in svcinfo_box and ("enclosure_serial_number:" + SERIAL_NUMBER) in svcinfo_box:
+                    for parametr in svcinfo_box.strip().split("\n"):
+                        if "name:" in parametr:
+                            expansion_dict["name_node_id_1"] = parametr.split(":")[1]
+
         return expansion_dict
 
     for key in dict_id_enclosure:
-        polka = parse_expansion(key, log, SERIAL_NUMBER, timestamp)
+        polka = parse_expansion(key, log, log_svcout, SERIAL_NUMBER, timestamp)
         enclosure = EnclosureModel(
             serial_number_cluster=polka["serial_number_cluster"],
             date_timestamp=polka["date_timestamp"],
@@ -190,6 +204,7 @@ def pars(name):
             identify_LED=polka["identify_LED"],
             total_canisters=polka["total_canisters"],
             online_canisters=polka["online_canisters"],
+            name_node_id_1=polka["name_node_id_1"],
         )
         enclosure.save()
         # print("___________________________________________________________________________________")
