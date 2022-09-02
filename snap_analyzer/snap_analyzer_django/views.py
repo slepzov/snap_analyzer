@@ -146,7 +146,8 @@ def pars(name):
 
     def parse_expansion(id, log, log_svcout, SERIAL_NUMBER, timestamp):
         expansion_dict = {"serial_number_cluster": SERIAL_NUMBER, "date_timestamp": timestamp, "id": id,
-                          "temperature": "", "total_PSUs": "2", "name_node_id_1": "SSS"}
+                          "temperature": "", "total_PSUs": "2", "name_node_id_1": "Null", "status_node_id_1": "Null",
+                          "service_IP_address_node_id_1": "Null", "node_id_1_WWNN": "Null"}
         for svcinfo_box in log:
             if ("lsenclosure -delim : " + id) in svcinfo_box:
                 # print(svcinfo_box.strip().split("\n"))
@@ -176,14 +177,21 @@ def pars(name):
                     if "online_canisters:" in parametr:
                         expansion_dict["online_canisters"] = parametr.split(":")[1]
                 break
-
+        break_flag = False
         if expansion_dict["type"] == "control":
             for svcinfo_box in log_svcout:
-                if "lsnode -delim : " in svcinfo_box and "id:1" in svcinfo_box and ("enclosure_serial_number:" + SERIAL_NUMBER) in svcinfo_box:
+                if "lsnode -delim : " in svcinfo_box and "id:1" in svcinfo_box and (
+                        "enclosure_serial_number:" + SERIAL_NUMBER) in svcinfo_box:
                     for parametr in svcinfo_box.strip().split("\n"):
-                        if "name:" in parametr:
+                        if "name:" in parametr and break_flag == False:
                             expansion_dict["name_node_id_1"] = parametr.split(":")[1]
-
+                            break_flag = True
+                        if "status:" in parametr and expansion_dict["status_node_id_1"] == "Null":
+                            expansion_dict["status_node_id_1"] = parametr.split(":")[1]
+                        if "service_IP_address:" in parametr and expansion_dict["service_IP_address_node_id_1"] == "Null":
+                            expansion_dict["service_IP_address_node_id_1"] = parametr.split(":")[1]
+                        if "WWNN:" in parametr and expansion_dict["node_id_1_WWNN"] == "Null":
+                            expansion_dict["node_id_1_WWNN"] = parametr.split(":")[1]
         return expansion_dict
 
     for key in dict_id_enclosure:
@@ -205,6 +213,9 @@ def pars(name):
             total_canisters=polka["total_canisters"],
             online_canisters=polka["online_canisters"],
             name_node_id_1=polka["name_node_id_1"],
+            status_node_id_1=polka["status_node_id_1"],
+            service_IP_address_node_id_1=polka["service_IP_address_node_id_1"],
+            node_id_1_WWNN=polka["node_id_1_WWNN"],
         )
         enclosure.save()
         # print("___________________________________________________________________________________")
@@ -228,5 +239,6 @@ def removeReadOnly(func, path, excinfo):
 
 def detail(request, blog_id):
     blog = get_object_or_404(GeneralCluster, pk=blog_id)
-    enclosures = EnclosureModel.objects.all().filter(serial_number_cluster=blog.serial_number_cluster).filter(date_timestamp=blog.date_timestamp)
+    enclosures = EnclosureModel.objects.all().filter(serial_number_cluster=blog.serial_number_cluster).filter(
+        date_timestamp=blog.date_timestamp)
     return render(request, 'snap_analyzer_django/detail.html', {'blog': blog, 'enclosures': enclosures})

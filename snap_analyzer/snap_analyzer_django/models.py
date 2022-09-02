@@ -27,3 +27,6 @@ class EnclosureModel(models.Model):
     total_canisters = models.CharField(max_length=40)
     online_canisters = models.CharField(max_length=40)
     name_node_id_1 = models.CharField(max_length=40)
+    status_node_id_1 = models.CharField(max_length=40)
+    service_IP_address_node_id_1 = models.CharField(max_length=40)
+    node_id_1_WWNN = models.CharField(max_length=40)
