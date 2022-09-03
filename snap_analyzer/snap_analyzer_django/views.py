@@ -1,6 +1,7 @@
 import os
 import shutil
 import stat
+import time
 
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
@@ -114,7 +115,7 @@ def pars(name):
     with open(DIRECTORY_NAME + "\dumps\\" + INTERNALSTORAGE) as f:
         log = f.read().split("svcinfo")
 
-    with open(DIRECTORY_NAME + "\dumps\\" + SVCOUT) as f:
+    with open(DIRECTORY_NAME + "\dumps\\" + SVCOUT, "r", encoding="utf-8") as f:
         log_svcout = f.read().split("svcinfo")
 
     number_enclosure = ""
@@ -146,7 +147,8 @@ def pars(name):
 
     def parse_expansion(id, log, log_svcout, SERIAL_NUMBER, timestamp):
         expansion_dict = {"serial_number_cluster": SERIAL_NUMBER, "date_timestamp": timestamp, "id": id,
-                          "temperature": "", "total_PSUs": "2", "name_node_id_1": "Null", "status_node_id_1": "Null",
+                          "temperature": "", "total_PSUs": "2", "id_node_left": "Null", "id_node_right": "Null",
+                          "name_node_left": "Null", "name_node_right": "Null", "status_node_id_1": "Null",
                           "service_IP_address_node_id_1": "Null", "node_id_1_WWNN": "Null"}
         for svcinfo_box in log:
             if ("lsenclosure -delim : " + id) in svcinfo_box:
@@ -180,12 +182,20 @@ def pars(name):
         break_flag = False
         if expansion_dict["type"] == "control":
             for svcinfo_box in log_svcout:
-                if "lsnode -delim : " in svcinfo_box and "id:1" in svcinfo_box and (
-                        "enclosure_serial_number:" + SERIAL_NUMBER) in svcinfo_box:
+                if "lsnode -delim : " in svcinfo_box and \
+                    ("enclosure_serial_number:" + SERIAL_NUMBER) in svcinfo_box:
                     for parametr in svcinfo_box.strip().split("\n"):
-                        if "name:" in parametr and break_flag == False:
-                            expansion_dict["name_node_id_1"] = parametr.split(":")[1]
-                            break_flag = True
+                        if "id:" in parametr and expansion_dict["id_node_left"] == "Null":
+                            expansion_dict["id_node_left"] = parametr.split(":")[1]
+                        if "id:" in parametr and expansion_dict["id_node_right"] == "Null":
+                            expansion_dict["id_node_right"] = parametr.split(":")[1]
+
+        if expansion_dict["type"] == "control":
+            for svcinfo_box in log_svcout:
+                if "lsnode -delim : " + expansion_dict["id_node_left"] in svcinfo_box:
+                    for parametr in svcinfo_box.strip().split("\n"):
+                        if "name:" in parametr and expansion_dict["name_node_left"] == "Null":
+                            expansion_dict["name_node_left"] = parametr.split(":")[1]
                         if "status:" in parametr and expansion_dict["status_node_id_1"] == "Null":
                             expansion_dict["status_node_id_1"] = parametr.split(":")[1]
                         if "service_IP_address:" in parametr and expansion_dict["service_IP_address_node_id_1"] == "Null":
@@ -212,7 +222,8 @@ def pars(name):
             identify_LED=polka["identify_LED"],
             total_canisters=polka["total_canisters"],
             online_canisters=polka["online_canisters"],
-            name_node_id_1=polka["name_node_id_1"],
+            id_node_left=polka["id_node_left"],
+            name_node_left=polka["name_node_left"],
             status_node_id_1=polka["status_node_id_1"],
             service_IP_address_node_id_1=polka["service_IP_address_node_id_1"],
             node_id_1_WWNN=polka["node_id_1_WWNN"],
