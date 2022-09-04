@@ -148,8 +148,8 @@ def pars(name):
     def parse_expansion(id, log, log_svcout, SERIAL_NUMBER, timestamp):
         expansion_dict = {"serial_number_cluster": SERIAL_NUMBER, "date_timestamp": timestamp, "id": id,
                           "temperature": "", "total_PSUs": "2", "id_node_left": "Null", "id_node_right": "Null",
-                          "name_node_left": "Null", "name_node_right": "Null", "status_node_id_1": "Null",
-                          "service_IP_address_node_id_1": "Null", "node_id_1_WWNN": "Null"}
+                          "name_node_left": "Null", "name_node_right": "Null", "status_node_left": "Null",
+                          "service_IP_address_node_left": "Null", "node_left_WWNN": "Null"}
         for svcinfo_box in log:
             if ("lsenclosure -delim : " + id) in svcinfo_box:
                 # print(svcinfo_box.strip().split("\n"))
@@ -179,11 +179,11 @@ def pars(name):
                     if "online_canisters:" in parametr:
                         expansion_dict["online_canisters"] = parametr.split(":")[1]
                 break
-        break_flag = False
+
         if expansion_dict["type"] == "control":
             for svcinfo_box in log_svcout:
                 if "lsnode -delim : " in svcinfo_box and \
-                    ("enclosure_serial_number:" + SERIAL_NUMBER) in svcinfo_box:
+                        ("enclosure_serial_number:" + expansion_dict["serial_number"]) in svcinfo_box:
                     for parametr in svcinfo_box.strip().split("\n"):
                         if "id:" in parametr and expansion_dict["id_node_left"] == "Null":
                             expansion_dict["id_node_left"] = parametr.split(":")[1]
@@ -193,15 +193,17 @@ def pars(name):
         if expansion_dict["type"] == "control":
             for svcinfo_box in log_svcout:
                 if "lsnode -delim : " + expansion_dict["id_node_left"] in svcinfo_box:
+                    print("lsnode -delim : " + expansion_dict["id_node_left"])
                     for parametr in svcinfo_box.strip().split("\n"):
                         if "name:" in parametr and expansion_dict["name_node_left"] == "Null":
                             expansion_dict["name_node_left"] = parametr.split(":")[1]
-                        if "status:" in parametr and expansion_dict["status_node_id_1"] == "Null":
-                            expansion_dict["status_node_id_1"] = parametr.split(":")[1]
-                        if "service_IP_address:" in parametr and expansion_dict["service_IP_address_node_id_1"] == "Null":
-                            expansion_dict["service_IP_address_node_id_1"] = parametr.split(":")[1]
-                        if "WWNN:" in parametr and expansion_dict["node_id_1_WWNN"] == "Null":
-                            expansion_dict["node_id_1_WWNN"] = parametr.split(":")[1]
+                        if "status:" in parametr and expansion_dict["status_node_left"] == "Null":
+                            expansion_dict["status_node_left"] = parametr.split(":")[1]
+                        if "service_IP_address:" in parametr and expansion_dict[
+                            "service_IP_address_node_left"] == "Null":
+                            expansion_dict["service_IP_address_node_left"] = parametr.split(":")[1]
+                        if "WWNN:" in parametr and expansion_dict["node_left_WWNN"] == "Null":
+                            expansion_dict["node_left_WWNN"] = parametr.split(":")[1]
         return expansion_dict
 
     for key in dict_id_enclosure:
@@ -224,9 +226,9 @@ def pars(name):
             online_canisters=polka["online_canisters"],
             id_node_left=polka["id_node_left"],
             name_node_left=polka["name_node_left"],
-            status_node_id_1=polka["status_node_id_1"],
-            service_IP_address_node_id_1=polka["service_IP_address_node_id_1"],
-            node_id_1_WWNN=polka["node_id_1_WWNN"],
+            status_node_left=polka["status_node_left"],
+            service_IP_address_node_left=polka["service_IP_address_node_left"],
+            node_left_WWNN=polka["node_left_WWNN"],
         )
         enclosure.save()
         # print("___________________________________________________________________________________")
