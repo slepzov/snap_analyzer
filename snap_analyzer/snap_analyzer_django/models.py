@@ -30,4 +30,4 @@ class EnclosureModel(models.Model):
     name_node_left = models.CharField(max_length=40)
     status_node_left = models.CharField(max_length=40)
     service_IP_address_node_left = models.CharField(max_length=40)
-    node_left_WWNN = models.CharField(max_length=40)
+    IO_group_id_node_left = models.CharField(max_length=40)

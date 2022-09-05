@@ -149,7 +149,7 @@ def pars(name):
         expansion_dict = {"serial_number_cluster": SERIAL_NUMBER, "date_timestamp": timestamp, "id": id,
                           "temperature": "", "total_PSUs": "2", "id_node_left": "Null", "id_node_right": "Null",
                           "name_node_left": "Null", "name_node_right": "Null", "status_node_left": "Null",
-                          "service_IP_address_node_left": "Null", "node_left_WWNN": "Null"}
+                          "service_IP_address_node_left": "Null", "IO_group_id_node_left": "Null"}
         for svcinfo_box in log:
             if ("lsenclosure -delim : " + id) in svcinfo_box:
                 # print(svcinfo_box.strip().split("\n"))
@@ -199,11 +199,10 @@ def pars(name):
                             expansion_dict["name_node_left"] = parametr.split(":")[1]
                         if "status:" in parametr and expansion_dict["status_node_left"] == "Null":
                             expansion_dict["status_node_left"] = parametr.split(":")[1]
-                        if "service_IP_address:" in parametr and expansion_dict[
-                            "service_IP_address_node_left"] == "Null":
+                        if "service_IP_address:" in parametr and expansion_dict["service_IP_address_node_left"] == "Null":
                             expansion_dict["service_IP_address_node_left"] = parametr.split(":")[1]
-                        if "WWNN:" in parametr and expansion_dict["node_left_WWNN"] == "Null":
-                            expansion_dict["node_left_WWNN"] = parametr.split(":")[1]
+                        if "IO_group_id:" in parametr and expansion_dict["IO_group_id_node_left"] == "Null":
+                            expansion_dict["IO_group_id_node_left"] = parametr.split(":")[1]
         return expansion_dict
 
     for key in dict_id_enclosure:
@@ -228,7 +227,7 @@ def pars(name):
             name_node_left=polka["name_node_left"],
             status_node_left=polka["status_node_left"],
             service_IP_address_node_left=polka["service_IP_address_node_left"],
-            node_left_WWNN=polka["node_left_WWNN"],
+            IO_group_id_node_left=polka["IO_group_id_node_left"],
         )
         enclosure.save()
         # print("___________________________________________________________________________________")
