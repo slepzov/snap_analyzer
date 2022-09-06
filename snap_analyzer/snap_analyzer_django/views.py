@@ -146,10 +146,25 @@ def pars(name):
     cluster.save()
 
     def parse_expansion(id, log, log_svcout, SERIAL_NUMBER, timestamp):
-        expansion_dict = {"serial_number_cluster": SERIAL_NUMBER, "date_timestamp": timestamp, "id": id,
-                          "temperature": "", "total_PSUs": "2", "id_node_left": "Null", "id_node_right": "Null",
-                          "name_node_left": "Null", "name_node_right": "Null", "status_node_left": "Null",
-                          "service_IP_address_node_left": "Null", "IO_group_id_node_left": "Null"}
+        expansion_dict = {"serial_number_cluster": SERIAL_NUMBER,
+                          "date_timestamp": timestamp,
+                          "id": id,
+                          "temperature": "",
+                          "total_PSUs": "2",
+
+                          "id_node_left": "Null",
+                          "name_node_left": "Null",
+                          "status_node_left": "Null",
+                          "service_IP_address_node_left": "Null",
+                          "IO_group_id_node_left": "Null",
+
+                          "id_node_right": "Null",
+                          "name_node_right": "Null",
+                          "status_node_right": "Null",
+                          "service_IP_address_node_right": "Null",
+                          "IO_group_id_node_right": "Null",
+                          }
+
         for svcinfo_box in log:
             if ("lsenclosure -delim : " + id) in svcinfo_box:
                 # print(svcinfo_box.strip().split("\n"))
@@ -187,6 +202,10 @@ def pars(name):
                     for parametr in svcinfo_box.strip().split("\n"):
                         if "id:" in parametr and expansion_dict["id_node_left"] == "Null":
                             expansion_dict["id_node_left"] = parametr.split(":")[1]
+                if "lsnode -delim : " in svcinfo_box and \
+                        ("enclosure_serial_number:" + expansion_dict["serial_number"]) in svcinfo_box and \
+                        ("partner_node_id:" + expansion_dict["id_node_left"]) in svcinfo_box:
+                    for parametr in svcinfo_box.strip().split("\n"):
                         if "id:" in parametr and expansion_dict["id_node_right"] == "Null":
                             expansion_dict["id_node_right"] = parametr.split(":")[1]
 
@@ -203,6 +222,16 @@ def pars(name):
                             expansion_dict["service_IP_address_node_left"] = parametr.split(":")[1]
                         if "IO_group_id:" in parametr and expansion_dict["IO_group_id_node_left"] == "Null":
                             expansion_dict["IO_group_id_node_left"] = parametr.split(":")[1]
+                if "lsnode -delim : " + expansion_dict["id_node_right"] in svcinfo_box:
+                    for parametr in svcinfo_box.strip().split("\n"):
+                        if "name:" in parametr and expansion_dict["name_node_right"] == "Null":
+                            expansion_dict["name_node_right"] = parametr.split(":")[1]
+                        if "status:" in parametr and expansion_dict["status_node_right"] == "Null":
+                            expansion_dict["status_node_right"] = parametr.split(":")[1]
+                        if "service_IP_address:" in parametr and expansion_dict["service_IP_address_node_right"] == "Null":
+                            expansion_dict["service_IP_address_node_right"] = parametr.split(":")[1]
+                        if "IO_group_id:" in parametr and expansion_dict["IO_group_id_node_right"] == "Null":
+                            expansion_dict["IO_group_id_node_right"] = parametr.split(":")[1]
         return expansion_dict
 
     for key in dict_id_enclosure:
@@ -228,6 +257,11 @@ def pars(name):
             status_node_left=polka["status_node_left"],
             service_IP_address_node_left=polka["service_IP_address_node_left"],
             IO_group_id_node_left=polka["IO_group_id_node_left"],
+            id_node_right=polka["id_node_right"],
+            name_node_right=polka["name_node_right"],
+            status_node_right=polka["status_node_right"],
+            service_IP_address_node_right=polka["service_IP_address_node_right"],
+            IO_group_id_node_right=polka["IO_group_id_node_right"],
         )
         enclosure.save()
         # print("___________________________________________________________________________________")
