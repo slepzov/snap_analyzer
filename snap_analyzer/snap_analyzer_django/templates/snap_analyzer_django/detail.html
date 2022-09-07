@@ -39,11 +39,17 @@
             <br>
             <table>
                 <tr><td colspan="2"> Snap history:</td></tr>
-    			<tr style="cursor: pointer;"  class="text-danger"  onclick="location.href='unit?id=63087301db3965fe757e33bc'">
-        		<td class='col-1' nowrap>8.2.1.8</td>
-        		<td class='col-1' nowrap>2022.08.26 09:40:41</td>
+                {% for cluster in clusters %}
+                {% if cluster.id == blog.id %}
+    			<tr style="cursor: pointer;"  class="text-danger"  onclick="location.href='{% url 'detail' cluster.id %}'">
+                {% endif %}
+                {% if cluster.id != blog.id %}
+    			<tr style="cursor: pointer;" onclick="location.href='{% url 'detail' cluster.id %}'">
+                {% endif %}
+        		<td class='col-1' nowrap>{{ cluster.code_level }}</td>
+        		<td class='col-1' nowrap>{{ cluster.date_timestamp }}</td>
     			</tr>
-
+                {% endfor %}
             </table>
             </nav>
         </div>

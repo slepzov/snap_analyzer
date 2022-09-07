@@ -94,6 +94,15 @@ def pars(name):
 
     timestamp = date_timestamp + ' ' + time_timestamp
 
+    cluster = GeneralCluster.objects.values().filter(serial_number_cluster=SERIAL_NUMBER).filter(
+        date_timestamp=timestamp)
+
+    if len(cluster) > 0:
+        os.remove(SNAP_NAME)
+        shutil.rmtree(DIRECTORY_NAME, onerror=removeReadOnly)
+        return
+
+
     with open(DIRECTORY_NAME + "\dumps\\" + INTERNALSTORAGE) as f:
         log = f.read().split("svcinfo")
 
@@ -265,6 +274,9 @@ def removeReadOnly(func, path, excinfo):
 
 def detail(request, blog_id):
     blog = get_object_or_404(GeneralCluster, pk=blog_id)
+    clusters = GeneralCluster.objects.all().filter(serial_number_cluster=blog.serial_number_cluster)
     enclosures = EnclosureModel.objects.all().filter(serial_number_cluster=blog.serial_number_cluster).filter(
         date_timestamp=blog.date_timestamp)
-    return render(request, 'snap_analyzer_django/detail.html', {'blog': blog, 'enclosures': enclosures})
+    return render(request, 'snap_analyzer_django/detail.html', {'blog': blog,
+                                                                'enclosures': enclosures,
+                                                                'clusters': clusters})
