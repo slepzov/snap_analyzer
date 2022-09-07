@@ -151,6 +151,7 @@ def pars(name):
                           "id": id,
                           "temperature": "",
                           "total_PSUs": "2",
+                          "online_batteries": 0,
 
                           "id_node_left": "Null",
                           "name_node_left": "Null",
@@ -193,6 +194,10 @@ def pars(name):
                         expansion_dict["total_canisters"] = parametr.split(":")[1]
                     if "online_canisters:" in parametr:
                         expansion_dict["online_canisters"] = parametr.split(":")[1]
+            if "lsenclosurebattery -delim :" in svcinfo_box:
+                for parametr in svcinfo_box.strip().split("\n"):
+                    if parametr.split(":")[0] == id and parametr.split(":")[2] == "online":
+                        expansion_dict["online_batteries"] += 1
                 break
 
         if expansion_dict["type"] == "control":
@@ -202,12 +207,14 @@ def pars(name):
                     for parametr in svcinfo_box.strip().split("\n"):
                         if "id:" in parametr and expansion_dict["id_node_left"] == "Null":
                             expansion_dict["id_node_left"] = parametr.split(":")[1]
+                            break
                 if "lsnode -delim : " in svcinfo_box and \
                         ("enclosure_serial_number:" + expansion_dict["serial_number"]) in svcinfo_box and \
                         ("partner_node_id:" + expansion_dict["id_node_left"]) in svcinfo_box:
                     for parametr in svcinfo_box.strip().split("\n"):
                         if "id:" in parametr and expansion_dict["id_node_right"] == "Null":
                             expansion_dict["id_node_right"] = parametr.split(":")[1]
+                            break
 
         if expansion_dict["type"] == "control":
             for svcinfo_box in log_svcout:
@@ -218,7 +225,8 @@ def pars(name):
                             expansion_dict["name_node_left"] = parametr.split(":")[1]
                         if "status:" in parametr and expansion_dict["status_node_left"] == "Null":
                             expansion_dict["status_node_left"] = parametr.split(":")[1]
-                        if "service_IP_address:" in parametr and expansion_dict["service_IP_address_node_left"] == "Null":
+                        if "service_IP_address:" in parametr and expansion_dict[
+                            "service_IP_address_node_left"] == "Null":
                             expansion_dict["service_IP_address_node_left"] = parametr.split(":")[1]
                         if "IO_group_id:" in parametr and expansion_dict["IO_group_id_node_left"] == "Null":
                             expansion_dict["IO_group_id_node_left"] = parametr.split(":")[1]
@@ -228,7 +236,8 @@ def pars(name):
                             expansion_dict["name_node_right"] = parametr.split(":")[1]
                         if "status:" in parametr and expansion_dict["status_node_right"] == "Null":
                             expansion_dict["status_node_right"] = parametr.split(":")[1]
-                        if "service_IP_address:" in parametr and expansion_dict["service_IP_address_node_right"] == "Null":
+                        if "service_IP_address:" in parametr and expansion_dict[
+                            "service_IP_address_node_right"] == "Null":
                             expansion_dict["service_IP_address_node_right"] = parametr.split(":")[1]
                         if "IO_group_id:" in parametr and expansion_dict["IO_group_id_node_right"] == "Null":
                             expansion_dict["IO_group_id_node_right"] = parametr.split(":")[1]
@@ -243,6 +252,7 @@ def pars(name):
             type=polka["type"],
             temperature=polka["temperature"],
             total_PSUs=polka["total_PSUs"],
+            online_batteries=polka["online_batteries"],
             product_MTM_enclosure=polka["product_MTM"],
             serial_number_enclosure=polka["serial_number"],
             status_enclosure=polka["status"],

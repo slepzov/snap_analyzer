@@ -173,9 +173,11 @@
                 <td>
                     PSUs : {{ enclosure.online_PSUs }}/{{ enclosure.total_PSUs }}
                 </td>
+                {% if enclosure.type == "control" %}
                 <td>
-                    Battery : 0/0
+                    Battery : {{ enclosure.online_batteries }}/2
                 </td>
+                {% endif %}
             </td></tr>
             <tr><td colspan="4">
 

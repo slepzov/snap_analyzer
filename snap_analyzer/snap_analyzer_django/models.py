@@ -17,6 +17,7 @@ class EnclosureModel(models.Model):
     type = models.CharField(max_length=40)
     temperature = models.CharField(max_length=40)
     total_PSUs = models.CharField(max_length=40)
+    online_batteries = models.IntegerField()
     product_MTM_enclosure = models.CharField(max_length=40)
     serial_number_enclosure = models.CharField(max_length=40)
     status_enclosure = models.CharField(max_length=40)
