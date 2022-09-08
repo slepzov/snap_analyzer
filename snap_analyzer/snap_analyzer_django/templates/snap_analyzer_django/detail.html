@@ -63,9 +63,19 @@
                 <td>
                     Enc_type : {{ enclosure.product_MTM_enclosure }}({{ enclosure.type }})<br> Sn : {{ enclosure.serial_number_enclosure }}
                 </td>
-                <td  class="text-success" >
-                    Status : {{ enclosure.status_enclosure }}
-                </td>
+                {% if enclosure.status_enclosure == "online" %}
+                    <td  class="text-success" >
+                        Status : {{ enclosure.status_enclosure }}
+                    </td>
+                {% elif enclosure.status_enclosure == "degraded" %}
+                    <td  class="text-warning" >
+                        Status : {{ enclosure.status_enclosure }}
+                    </td>
+                {% elif enclosure.status_enclosure == "offline" %}
+                    <td  class="text-danger" >
+                        Status : {{ enclosure.status_enclosure }}
+                    </td>
+                {% endif %}
                 <td>
                     Temperature : {{ enclosure.temperature }}
                 </td>
@@ -80,7 +90,11 @@
                         <tr onclick="window.open('node_info?id=63087301db3965fe757e33bc&node_id=1','_blank')">
                             <td colspan=2 width="240" align="center" bgcolor="#DDDDDD">{{ enclosure.name_node_left }}</td>
                         </tr><tr onclick="window.open('node_info?id=63087301db3965fe757e33bc&node_id=1','_blank')">
+                        {% if enclosure.status_node_left == "online" %}
                             <td width="120" align="center"  class="bg-success" >{{ enclosure.status_node_left }}</td>
+                        {% elif enclosure.status_node_left == "offline" %}
+                            <td width="120" align="center"  class="bg-danger" >{{ enclosure.status_node_left }}</td>
+                        {% endif %}
                             <td width="120" align="center">{{ enclosure.service_IP_address_node_left }}</td>
                         </tr>
                     </table>
@@ -93,8 +107,12 @@
                         <tr onclick="window.open('node_info?id=63087301db3965fe757e33bc&node_id=2','_blank')">
                             <td colspan=2 width="240" align="center" bgcolor="#DDDDDD">{{ enclosure.name_node_right }}</td>
                         </tr><tr onclick="window.open('node_info?id=63087301db3965fe757e33bc&node_id=2','_blank')">
+                        {% if enclosure.status_node_right == "online" %}
                             <td width="120" align="center"  class="bg-success" >{{ enclosure.status_node_right }}</td>
-                            <td width="120" align="center">{{ enclosure.service_IP_address_node_right }}</td>
+                        {% elif enclosure.status_node_right == "offline" %}
+                            <td width="120" align="center"  class="bg-danger" >{{ enclosure.status_node_right }}</td>
+                        {% endif %}
+                        <td width="120" align="center">{{ enclosure.service_IP_address_node_right }}</td>
                         </tr>
                     </table>
                 </td>
