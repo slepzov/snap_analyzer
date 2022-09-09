@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.core.files.storage import FileSystemStorage
 from rest_framework.viewsets import ModelViewSet
 
-from snap_analyzer_django.models import GeneralCluster, EnclosureModel
+from snap_analyzer_django.models import GeneralCluster, EnclosureModel, DriveModel
 from snap_analyzer_django.serializers import ClusterSerializer
 
 
@@ -102,7 +102,6 @@ def pars(name):
         shutil.rmtree(DIRECTORY_NAME, onerror=removeReadOnly)
         return
 
-
     with open(DIRECTORY_NAME + "\dumps\\" + INTERNALSTORAGE) as f:
         log = f.read().split("svcinfo")
 
@@ -116,7 +115,7 @@ def pars(name):
         if "lsenclosure -delim" in svcinfo_box:
             number_enclosure = len(svcinfo_box.strip().split("\n")[2:])
             for line in svcinfo_box.strip().split("\n")[2:]:
-                dict_id_enclosure[line.split(":")[0]] = line.split(":")[2]
+                dict_id_enclosure[line.split(":")[0]] = line.split(":")[7]
             break
 
     general_information = {'product_name': PRODUCT_NAME, 'type': TYPE,
@@ -262,6 +261,20 @@ def pars(name):
         )
         enclosure.save()
 
+    all_drive = drive_parsing(log, dict_id_enclosure, timestamp)
+    for drive in all_drive:
+        disc = DriveModel(
+            serial_number_enclosure=drive["serial_number_enclosure"],
+            date_timestamp=drive["timestamp"],
+            drive_id=drive["drive_id"],
+            drive_status=drive["drive_status"],
+            drive_use=drive["drive_use"],
+            capacity=drive["capacity"],
+            drive_slot_id=drive["drive_slot_id"],
+            id_enclosure=drive["id_enclosure"],
+        )
+        disc.save()
+
     os.remove(SNAP_NAME)
     shutil.rmtree(DIRECTORY_NAME, onerror=removeReadOnly)
     return general_information
@@ -280,3 +293,28 @@ def detail(request, blog_id):
     return render(request, 'snap_analyzer_django/detail.html', {'blog': blog,
                                                                 'enclosures': enclosures,
                                                                 'clusters': clusters})
+
+
+def drive_parsing(log, dict_id_enclosure, timestamp):
+    all_drive_enclosure = []
+    info_dict_drive = {}
+    for svcinfo_box in log:
+        if ("lsdrive -delim :") in svcinfo_box:
+            lsdrive = svcinfo_box.strip().split("\n")
+            print("****************************!")
+            print(lsdrive)
+            print("*********************!")
+            for id in range(2, len(lsdrive)):
+                lsdrive_book = lsdrive[id].split(":")
+
+                info_dict_drive["drive_id"] = lsdrive_book[0]
+                info_dict_drive["drive_status"] = lsdrive_book[1]
+                info_dict_drive["drive_use"] = lsdrive_book[3]
+                info_dict_drive["capacity"] = lsdrive_book[5]
+                info_dict_drive["drive_slot_id"] = lsdrive_book[10]
+                info_dict_drive["id_enclosure"] = lsdrive_book[9]
+                info_dict_drive["serial_number_enclosure"] = dict_id_enclosure[info_dict_drive["id_enclosure"]]
+                info_dict_drive["timestamp"] = timestamp
+                all_drive_enclosure.append(info_dict_drive)
+            break
+    return all_drive_enclosure

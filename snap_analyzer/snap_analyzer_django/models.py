@@ -37,3 +37,14 @@ class EnclosureModel(models.Model):
     status_node_right = models.CharField(max_length=40)
     service_IP_address_node_right = models.CharField(max_length=40)
     IO_group_id_node_right = models.CharField(max_length=40)
+
+
+class DriveModel(models.Model):
+    serial_number_enclosure = models.CharField(max_length=10)
+    date_timestamp = models.CharField(max_length=40)
+    drive_id = models.CharField(max_length=40)
+    drive_status = models.CharField(max_length=40)
+    drive_use = models.CharField(max_length=40)
+    capacity = models.CharField(max_length=40)
+    drive_slot_id = models.CharField(max_length=40)
+    id_enclosure = models.CharField(max_length=40)
