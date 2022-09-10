@@ -264,6 +264,7 @@ def pars(name):
     all_drive = drive_parsing(log, dict_id_enclosure, timestamp)
     for drive in all_drive:
         disc = DriveModel(
+            serial_number_cluster=SERIAL_NUMBER,
             serial_number_enclosure=drive["serial_number_enclosure"],
             date_timestamp=drive["timestamp"],
             drive_id=drive["drive_id"],
@@ -290,9 +291,13 @@ def detail(request, blog_id):
     clusters = GeneralCluster.objects.all().filter(serial_number_cluster=blog.serial_number_cluster)
     enclosures = EnclosureModel.objects.all().filter(serial_number_cluster=blog.serial_number_cluster).filter(
         date_timestamp=blog.date_timestamp)
+
+    drives = DriveModel.objects.all().filter(serial_number_cluster=blog.serial_number_cluster).filter(
+        date_timestamp=blog.date_timestamp).order_by('drive_slot_id')
     return render(request, 'snap_analyzer_django/detail.html', {'blog': blog,
                                                                 'enclosures': enclosures,
-                                                                'clusters': clusters})
+                                                                'clusters': clusters,
+                                                                'drives': drives})
 
 
 def drive_parsing(log, dict_id_enclosure, timestamp):
@@ -301,20 +306,17 @@ def drive_parsing(log, dict_id_enclosure, timestamp):
     for svcinfo_box in log:
         if ("lsdrive -delim :") in svcinfo_box:
             lsdrive = svcinfo_box.strip().split("\n")
-            print("****************************!")
-            print(lsdrive)
-            print("*********************!")
             for id in range(2, len(lsdrive)):
                 lsdrive_book = lsdrive[id].split(":")
-
                 info_dict_drive["drive_id"] = lsdrive_book[0]
                 info_dict_drive["drive_status"] = lsdrive_book[1]
                 info_dict_drive["drive_use"] = lsdrive_book[3]
                 info_dict_drive["capacity"] = lsdrive_book[5]
-                info_dict_drive["drive_slot_id"] = lsdrive_book[10]
+                info_dict_drive["drive_slot_id"] = int(lsdrive_book[10])
                 info_dict_drive["id_enclosure"] = lsdrive_book[9]
                 info_dict_drive["serial_number_enclosure"] = dict_id_enclosure[info_dict_drive["id_enclosure"]]
                 info_dict_drive["timestamp"] = timestamp
                 all_drive_enclosure.append(info_dict_drive)
+                info_dict_drive = {}
             break
     return all_drive_enclosure

@@ -122,68 +122,24 @@
             </td></tr>
         {% endif %}
             <tr><td colspan="4" align="center">
-                <!-- <table border=1><tr> -->
-
-                <!-- </tr> -->
-                <!-- <tr> -->
-
-                <!-- </tr></table> -->
-
               <table border=1><tr>
-
-                    <td bgcolor="#DDDDDD" align='center' width='30'>1</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>2</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>3</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>4</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>5</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>6</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>7</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>8</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>9</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>10</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>11</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>12</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>13</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>14</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>15</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>16</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>17</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>18</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>19</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>20</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>21</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>22</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>23</td>
-                    <td bgcolor="#DDDDDD" align='center' width='30'>24</td>
-
+                    {% for drive in drives %}
+                    {% if enclosure.serial_number_enclosure == drive.serial_number_enclosure %}
+                    <td bgcolor="#DDDDDD" align='center' width='30'>{{ drive.drive_slot_id }}</td>
+                    {% endif %}
+                    {% endfor %}
                  </tr><tr>
-
-
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">12</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">5</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">17</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">36</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">37</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">16</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">10</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">18</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">13</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">8</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">15</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">46</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">9</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">21</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">44</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">47</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">35</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">38</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">40</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">11</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">6</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">45</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">22</a></td>
-                     <td width='36' align='center'  class="bg-success"><a href="" target="popup" style="color: midnightblue;">29</a></td>
-
+                    {% for drive in drives %}
+                    {% if enclosure.serial_number_enclosure == drive.serial_number_enclosure %}
+                        {% if drive.drive_status == "online" %}
+                     <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                        {% elif drive.drive_status == "degraded" %}
+                     <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                        {% elif drive.drive_status == "offline" %}
+                     <td width='36' align='center' class="bg-danger"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
                  </tr><tr>
                  </tr><tr>
                  </tr><tr>

@@ -40,11 +40,12 @@ class EnclosureModel(models.Model):
 
 
 class DriveModel(models.Model):
+    serial_number_cluster = models.CharField(max_length=10)
     serial_number_enclosure = models.CharField(max_length=10)
     date_timestamp = models.CharField(max_length=40)
     drive_id = models.CharField(max_length=40)
     drive_status = models.CharField(max_length=40)
     drive_use = models.CharField(max_length=40)
     capacity = models.CharField(max_length=40)
-    drive_slot_id = models.CharField(max_length=40)
+    drive_slot_id = models.IntegerField()
     id_enclosure = models.CharField(max_length=40)
