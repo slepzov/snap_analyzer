@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Drive Report</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.js"></script>
+</head>
+<body>
+
+{% for drive in drives %}
+    <div class="container">
+        <div class="row">
+            <div class="col text-right">
+                 Drive id:
+            </div>
+            <div class="col">
+                {{ drive.drive_id }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Drive status :
+            </div>
+            <div class="col">
+                {{ drive.drive_status }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Drive use :
+            </div>
+            <div class="col">
+                {{ drive.drive_use }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Drive vendor :
+            </div>
+            <div class="col">
+                {{ drive.vendor_id }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Drive product id :
+            </div>
+            <div class="col">
+                {{ drive.product_id }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Drive capacity :
+            </div>
+            <div class="col">
+                {{ drive.capacity }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-right">
+                Drive firmware level :
+            </div>
+            <div class="col">
+                {{ drive.firmware_level }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-right">
+                Drive type :
+            </div>
+            <div class="col">
+                {{ drive.transport_protocol }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-right">
+                Drive FRU # :
+            </div>
+            <div class="col">
+                {{ drive.FRU_part_number }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                FRU identity :
+            </div>
+            <div class="col">
+                {{ drive.FRU_identity }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Enclosure Slot :
+            </div>
+            <div class="col">
+                {{ drive.drive_slot_id }}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col text-right">
+                Enclosure id :
+            </div>
+            <div class="col">
+                {{ drive.id_enclosure }}
+            </div>
+        </div>
+        {% for enclosure in enclosures %}
+        <div class="row">
+            <div class="col text-right">
+                Enclosure mtm :
+            </div>
+            <div class="col">
+                {{ enclosure.product_MTM_enclosure }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Enclosure SN :
+            </div>
+            <div class="col">
+                {{ drive.serial_number_enclosure }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Enclosure type :
+            </div>
+            <div class="col">
+                {{ enclosure.type }}
+            </div>
+        </div>
+        {% endfor %}
+        <hr>
+        <div class="row">
+            <div class="col text-right">
+                Mdisk id :
+            </div>
+            <div class="col">
+                {{ drive.mdisk_id }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Mdisk name :
+            </div>
+            <div class="col">
+                {{ drive.mdisk_name }}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</body>
+</html>

@@ -212,7 +212,7 @@ def pars(name):
                         if "status:" in parametr and expansion_dict["status_node_left"] == "Null":
                             expansion_dict["status_node_left"] = parametr.split(":")[1]
                         if "service_IP_address:" in parametr and expansion_dict[
-                            "service_IP_address_node_left"] == "Null":
+                                "service_IP_address_node_left"] == "Null":
                             expansion_dict["service_IP_address_node_left"] = parametr.split(":")[1]
                         if "IO_group_id:" in parametr and expansion_dict["IO_group_id_node_left"] == "Null":
                             expansion_dict["IO_group_id_node_left"] = parametr.split(":")[1]
@@ -223,7 +223,7 @@ def pars(name):
                         if "status:" in parametr and expansion_dict["status_node_right"] == "Null":
                             expansion_dict["status_node_right"] = parametr.split(":")[1]
                         if "service_IP_address:" in parametr and expansion_dict[
-                            "service_IP_address_node_right"] == "Null":
+                                "service_IP_address_node_right"] == "Null":
                             expansion_dict["service_IP_address_node_right"] = parametr.split(":")[1]
                         if "IO_group_id:" in parametr and expansion_dict["IO_group_id_node_right"] == "Null":
                             expansion_dict["IO_group_id_node_right"] = parametr.split(":")[1]
@@ -273,6 +273,14 @@ def pars(name):
             capacity=drive["capacity"],
             drive_slot_id=drive["drive_slot_id"],
             id_enclosure=drive["id_enclosure"],
+            vendor_id=drive["vendor_id"],
+            product_id=drive["product_id"],
+            transport_protocol=drive["transport_protocol"],
+            FRU_part_number=drive["FRU_part_number"],
+            FRU_identity=drive["FRU_identity"],
+            mdisk_id=drive["mdisk_id"],
+            mdisk_name=drive["mdisk_name"],
+            firmware_level=drive["firmware_level"],
         )
         disc.save()
 
@@ -300,11 +308,22 @@ def detail(request, blog_id):
                                                                 'drives': drives})
 
 
+def drive_detail(request, blog_id_drive):
+    blog_drive = get_object_or_404(DriveModel, pk=blog_id_drive)
+    drives = DriveModel.objects.all().filter(serial_number_cluster=blog_drive.serial_number_cluster).filter(
+        date_timestamp=blog_drive.date_timestamp).filter(id=blog_drive.id)
+    enclosures = EnclosureModel.objects.all().filter(serial_number_enclosure=blog_drive.serial_number_enclosure).filter(
+        date_timestamp=blog_drive.date_timestamp)
+    return render(request, 'snap_analyzer_django/drive_detail.html', {'blog_drive': blog_drive,
+                                                                      'drives': drives,
+                                                                      'enclosures': enclosures})
+
+
 def drive_parsing(log, dict_id_enclosure, timestamp):
     all_drive_enclosure = []
     info_dict_drive = {}
     for svcinfo_box in log:
-        if ("lsdrive -delim :") in svcinfo_box:
+        if "lsdrive -delim :" in svcinfo_box:
             lsdrive = svcinfo_box.strip().split("\n")
             for id in range(2, len(lsdrive)):
                 lsdrive_book = lsdrive[id].split(":")
@@ -316,7 +335,28 @@ def drive_parsing(log, dict_id_enclosure, timestamp):
                 info_dict_drive["id_enclosure"] = lsdrive_book[9]
                 info_dict_drive["serial_number_enclosure"] = dict_id_enclosure[info_dict_drive["id_enclosure"]]
                 info_dict_drive["timestamp"] = timestamp
+                info_dict_drive["vendor_id"] = parse_property_drive(log, info_dict_drive["drive_id"], "vendor_id:")
+                info_dict_drive["product_id"] = parse_property_drive(log, info_dict_drive["drive_id"], "product_id:")
+                info_dict_drive["transport_protocol"] = parse_property_drive(log, info_dict_drive["drive_id"],
+                                                                             "transport_protocol:")
+                info_dict_drive["FRU_part_number"] = parse_property_drive(log, info_dict_drive["drive_id"],
+                                                                          "FRU_part_number:")
+                info_dict_drive["FRU_identity"] = parse_property_drive(log, info_dict_drive["drive_id"],
+                                                                       "FRU_identity:")
+                info_dict_drive["mdisk_id"] = parse_property_drive(log, info_dict_drive["drive_id"], "mdisk_id:")
+                info_dict_drive["mdisk_name"] = parse_property_drive(log, info_dict_drive["drive_id"], "mdisk_name:")
+                info_dict_drive["firmware_level"] = parse_property_drive(log, info_dict_drive["drive_id"],
+                                                                         "firmware_level:")
                 all_drive_enclosure.append(info_dict_drive)
                 info_dict_drive = {}
             break
+
     return all_drive_enclosure
+
+
+def parse_property_drive(log, drive_id, wanted_property):
+    for svcinfo_box in log:
+        if ("lsdrive -delim : " + drive_id) in svcinfo_box:
+            for parametr in svcinfo_box.strip().split("\n"):
+                if wanted_property in parametr:
+                    return parametr.split(":")[1]

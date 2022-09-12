@@ -128,8 +128,7 @@
                     {% for drive in drives %}
                     {% if enclosure.serial_number_enclosure == drive.serial_number_enclosure %}
                         {% if drive.drive_slot_id == 35 or drive.drive_slot_id == 47 or drive.drive_slot_id == 59 %}
-                            <td bgcolor="#DDDDDD" align='center' width='30'>  </td>
-                            <td bgcolor="#DDDDDD" align='center' width='30'>  </td>
+                            <td colspan="2" bgcolor="#DDDDDD" align='center' width='30'> </td>
                         {% endif %}
                     <td bgcolor="#DDDDDD" align='center' width='30'>{{ drive.drive_slot_id }}</td>
                         {% if drive.drive_slot_id == 14 %}
@@ -137,11 +136,11 @@
                                 {% for drive in drives %}
                                 {% if enclosure.serial_number_enclosure == drive.serial_number_enclosure %}
                                     {% if drive.drive_status == "online" and drive.drive_slot_id <= 14 %}
-                                 <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                 <td width='36' align='center' class="bg-success"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% elif drive.drive_status == "degraded" and drive.drive_slot_id <= 14 %}
-                                 <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                 <td width='36' align='center' class="bg-warning"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% elif drive.drive_status == "offline" and drive.drive_slot_id <= 14 %}
-                                 <td width='36' align='center' class="bg-danger"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                 <td width='36' align='center' class="bg-danger"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% endif %}
                                 {% endif %}
                                 {% endfor %}
@@ -152,11 +151,11 @@
                                 {% for drive in drives %}
                                 {% if enclosure.serial_number_enclosure == drive.serial_number_enclosure %}
                                     {% if drive.drive_status == "online" and drive.drive_slot_id > 14 and drive.drive_slot_id <= 28 %}
-                                 <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                 <td width='36' align='center' class="bg-success"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% elif drive.drive_status == "degraded" and drive.drive_slot_id > 14 and drive.drive_slot_id <= 28 %}
-                                 <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                 <td width='36' align='center' class="bg-warning"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% elif drive.drive_status == "offline" and drive.drive_slot_id > 14 and drive.drive_slot_id <= 28 %}
-                                 <td width='36' align='center' class="bg-danger"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                 <td width='36' align='center' class="bg-danger"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% endif %}
                                 {% endif %}
                                 {% endfor %}
@@ -167,15 +166,14 @@
                                 {% for drive in drives %}
                                 {% if enclosure.serial_number_enclosure == drive.serial_number_enclosure %}
                                     {% if drive.drive_slot_id == 35 %}
-                                            <td bgcolor="#DDDDDD" align='center' width='30'>  </td>
-                                            <td bgcolor="#DDDDDD" align='center' width='30'>  </td>
+                                            <td colspan="2" bgcolor="#DDDDDD" align='center' width='30'>  </td>
                                     {% endif %}
                                     {% if drive.drive_status == "online" and drive.drive_slot_id > 28 and drive.drive_slot_id <= 40 %}
-                                        <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                        <td width='36' align='center' class="bg-success"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% elif drive.drive_status == "degraded" and drive.drive_slot_id > 28 and drive.drive_slot_id <= 40 %}
-                                        <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                        <td width='36' align='center' class="bg-warning"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% elif drive.drive_status == "offline" and drive.drive_slot_id > 28 and drive.drive_slot_id <= 40 %}
-                                        <td width='36' align='center' class="bg-danger"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                        <td width='36' align='center' class="bg-danger"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% endif %}
                                 {% endif %}
                                 {% endfor %}
@@ -186,15 +184,14 @@
                                 {% for drive in drives %}
                                 {% if enclosure.serial_number_enclosure == drive.serial_number_enclosure %}
                                     {% if drive.drive_slot_id == 47 %}
-                                            <td bgcolor="#DDDDDD" align='center' width='30'>  </td>
-                                            <td bgcolor="#DDDDDD" align='center' width='30'>  </td>
+                                            <td colspan="2" bgcolor="#DDDDDD" align='center' width='30'>  </td>
                                     {% endif %}
                                     {% if drive.drive_status == "online" and drive.drive_slot_id > 40 and drive.drive_slot_id <= 52 %}
-                                        <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                        <td width='36' align='center' class="bg-success"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% elif drive.drive_status == "degraded" and drive.drive_slot_id > 40 and drive.drive_slot_id <= 52 %}
-                                        <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                        <td width='36' align='center' class="bg-warning"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% elif drive.drive_status == "offline" and drive.drive_slot_id > 40 and drive.drive_slot_id <= 52 %}
-                                        <td width='36' align='center' class="bg-danger"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                        <td width='36' align='center' class="bg-danger"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% endif %}
                                 {% endif %}
                                 {% endfor %}
@@ -205,15 +202,14 @@
                                 {% for drive in drives %}
                                 {% if enclosure.serial_number_enclosure == drive.serial_number_enclosure %}
                                     {% if drive.drive_slot_id == 59 %}
-                                            <td bgcolor="#DDDDDD" align='center' width='30'>  </td>
-                                            <td bgcolor="#DDDDDD" align='center' width='30'>  </td>
+                                            <td colspan="2" bgcolor="#DDDDDD" align='center' width='30'>  </td>
                                     {% endif %}
                                     {% if drive.drive_status == "online" and drive.drive_slot_id > 52 and drive.drive_slot_id <= 64 %}
-                                        <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                        <td width='36' align='center' class="bg-success"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% elif drive.drive_status == "degraded" and drive.drive_slot_id > 52 and drive.drive_slot_id <= 64 %}
-                                        <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                        <td width='36' align='center' class="bg-warning"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% elif drive.drive_status == "offline" and drive.drive_slot_id > 52 and drive.drive_slot_id <= 64 %}
-                                        <td width='36' align='center' class="bg-danger"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                        <td width='36' align='center' class="bg-danger"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% endif %}
                                 {% endif %}
                                 {% endfor %}
@@ -224,11 +220,11 @@
                                 {% for drive in drives %}
                                 {% if enclosure.serial_number_enclosure == drive.serial_number_enclosure %}
                                     {% if drive.drive_status == "online" and drive.drive_slot_id > 64 and drive.drive_slot_id <= 78 %}
-                                 <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                 <td width='36' align='center' class="bg-success"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% elif drive.drive_status == "degraded" and drive.drive_slot_id > 64 and drive.drive_slot_id <= 78 %}
-                                 <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                 <td width='36' align='center' class="bg-warning"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% elif drive.drive_status == "offline" and drive.drive_slot_id > 64 and drive.drive_slot_id <= 78 %}
-                                 <td width='36' align='center' class="bg-danger"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                 <td width='36' align='center' class="bg-danger"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% endif %}
                                 {% endif %}
                                 {% endfor %}
@@ -239,11 +235,11 @@
                                 {% for drive in drives %}
                                 {% if enclosure.serial_number_enclosure == drive.serial_number_enclosure %}
                                     {% if drive.drive_status == "online" and drive.drive_slot_id > 78 and drive.drive_slot_id <= 92 %}
-                                 <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                 <td width='36' align='center' class="bg-success"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% elif drive.drive_status == "degraded" and drive.drive_slot_id > 78 and drive.drive_slot_id <= 92 %}
-                                 <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                 <td width='36' align='center' class="bg-warning"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% elif drive.drive_status == "offline" and drive.drive_slot_id > 78 and drive.drive_slot_id <= 92 %}
-                                 <td width='36' align='center' class="bg-danger"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                                 <td width='36' align='center' class="bg-danger"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
                                     {% endif %}
                                 {% endif %}
                                 {% endfor %}
@@ -263,21 +259,21 @@
             <tr><td colspan="4" align="center">
               <table border=1><tr>
                     {% for drive in drives %}
-                    {% if enclosure.serial_number_enclosure == drive.serial_number_enclosure %}
-                    <td bgcolor="#DDDDDD" align='center' width='30'>{{ drive.drive_slot_id }}</td>
-                    {% endif %}
+                        {% if enclosure.serial_number_enclosure == drive.serial_number_enclosure %}
+                            <td bgcolor="#DDDDDD" align='center' width='30'>{{ drive.drive_slot_id }}</td>
+                        {% endif %}
                     {% endfor %}
                  </tr><tr>
                     {% for drive in drives %}
-                    {% if enclosure.serial_number_enclosure == drive.serial_number_enclosure %}
-                        {% if drive.drive_status == "online" %}
-                     <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
-                        {% elif drive.drive_status == "degraded" %}
-                     <td width='36' align='center' class="bg-success"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
-                        {% elif drive.drive_status == "offline" %}
-                     <td width='36' align='center' class="bg-danger"><a href="" target="popup" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                        {% if enclosure.serial_number_enclosure == drive.serial_number_enclosure %}
+                            {% if drive.drive_status == "online" %}
+                                <td width='36' align='center' class="bg-success"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                            {% elif drive.drive_status == "degraded" %}
+                                <td width='36' align='center' class="bg-warning"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                            {% elif drive.drive_status == "offline" %}
+                                <td width='36' align='center' class="bg-danger"><a href="{% url 'drive_detail' drive.id %}" target="_blank" style="color: midnightblue;">{{ drive.drive_id }}</a></td>
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
                     {% endfor %}
                  </tr>
               </table>
