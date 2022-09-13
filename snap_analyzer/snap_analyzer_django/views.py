@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.core.files.storage import FileSystemStorage
 from rest_framework.viewsets import ModelViewSet
 
-from snap_analyzer_django.models import GeneralCluster, EnclosureModel, DriveModel
+from snap_analyzer_django.models import GeneralCluster, EnclosureModel, DriveModel, NodeModel
 from snap_analyzer_django.serializers import ClusterSerializer
 
 
@@ -249,18 +249,32 @@ def pars(name):
             total_canisters=polka["total_canisters"],
             online_canisters=polka["online_canisters"],
             id_node_left=polka["id_node_left"],
-            name_node_left=polka["name_node_left"],
-            status_node_left=polka["status_node_left"],
-            service_IP_address_node_left=polka["service_IP_address_node_left"],
-            IO_group_id_node_left=polka["IO_group_id_node_left"],
             id_node_right=polka["id_node_right"],
-            name_node_right=polka["name_node_right"],
-            status_node_right=polka["status_node_right"],
-            service_IP_address_node_right=polka["service_IP_address_node_right"],
-            IO_group_id_node_right=polka["IO_group_id_node_right"],
         )
         enclosure.save()
-
+        if polka["type"] == "control":
+            node_left = NodeModel(
+                serial_number_cluster=polka["serial_number_cluster"],
+                date_timestamp=polka["date_timestamp"],
+                serial_number_enclosure=polka["serial_number"],
+                id_node=polka["id_node_left"],
+                name_node=polka["name_node_left"],
+                status_node=polka["status_node_left"],
+                service_IP_address=polka["service_IP_address_node_left"],
+                IO_group_id_node=polka["IO_group_id_node_left"],
+            )
+            node_left.save()
+            node_right = NodeModel(
+                serial_number_cluster=polka["serial_number_cluster"],
+                date_timestamp=polka["date_timestamp"],
+                serial_number_enclosure=polka["serial_number"],
+                id_node=polka["id_node_right"],
+                name_node=polka["name_node_right"],
+                status_node=polka["status_node_right"],
+                service_IP_address=polka["service_IP_address_node_right"],
+                IO_group_id_node=polka["IO_group_id_node_right"],
+            )
+            node_right.save()
     all_drive = drive_parsing(log, dict_id_enclosure, timestamp)
     for drive in all_drive:
         disc = DriveModel(
@@ -299,12 +313,14 @@ def detail(request, blog_id):
     clusters = GeneralCluster.objects.all().filter(serial_number_cluster=blog.serial_number_cluster)
     enclosures = EnclosureModel.objects.all().filter(serial_number_cluster=blog.serial_number_cluster).filter(
         date_timestamp=blog.date_timestamp)
-
+    nodes = NodeModel.objects.all().filter(serial_number_cluster=blog.serial_number_cluster).filter(
+        date_timestamp=blog.date_timestamp)
     drives = DriveModel.objects.all().filter(serial_number_cluster=blog.serial_number_cluster).filter(
         date_timestamp=blog.date_timestamp).order_by('drive_slot_id')
     return render(request, 'snap_analyzer_django/detail.html', {'blog': blog,
                                                                 'enclosures': enclosures,
                                                                 'clusters': clusters,
+                                                                'nodes': nodes,
                                                                 'drives': drives})
 
 
@@ -317,6 +333,11 @@ def drive_detail(request, blog_id_drive):
     return render(request, 'snap_analyzer_django/drive_detail.html', {'blog_drive': blog_drive,
                                                                       'drives': drives,
                                                                       'enclosures': enclosures})
+
+
+def node_detail(request, blog_id_node):
+    blog_node = get_object_or_404(NodeModel, pk=blog_id_node)
+    return render(request, 'snap_analyzer_django/node_detail.html', {'blog_node': blog_node})
 
 
 def drive_parsing(log, dict_id_enclosure, timestamp):

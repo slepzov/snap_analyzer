@@ -28,16 +28,18 @@ class EnclosureModel(models.Model):
     total_canisters = models.CharField(max_length=40)
     online_canisters = models.CharField(max_length=40)
     id_node_left = models.CharField(max_length=40)
-    name_node_left = models.CharField(max_length=40)
-    status_node_left = models.CharField(max_length=40)
-    service_IP_address_node_left = models.CharField(max_length=40)
-    IO_group_id_node_left = models.CharField(max_length=40)
     id_node_right = models.CharField(max_length=40)
-    name_node_right = models.CharField(max_length=40)
-    status_node_right = models.CharField(max_length=40)
-    service_IP_address_node_right = models.CharField(max_length=40)
-    IO_group_id_node_right = models.CharField(max_length=40)
 
+
+class NodeModel(models.Model):
+    serial_number_cluster = models.CharField(max_length=10)
+    date_timestamp = models.CharField(max_length=40)
+    serial_number_enclosure = models.CharField(max_length=40)
+    id_node = models.CharField(max_length=40)
+    name_node = models.CharField(max_length=40)
+    status_node = models.CharField(max_length=40)
+    service_IP_address = models.CharField(max_length=40)
+    IO_group_id_node = models.CharField(max_length=40)
 
 class DriveModel(models.Model):
     serial_number_cluster = models.CharField(max_length=10)

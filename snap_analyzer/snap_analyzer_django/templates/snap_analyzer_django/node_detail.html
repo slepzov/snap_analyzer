@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ blog_node.name_node }} Info</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col text-right">
+                 Node id :
+            </div>
+            <div class="col">
+                {{ blog_node.id_node }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Node name :
+            </div>
+            <div class="col">
+                {{ blog_node.name_node }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Node WWNN :
+            </div>
+            <div class="col">
+                50050768100032D7
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Node status :
+            </div>
+            <div class="col">
+                {{ blog_node.status_node }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Node IO group id :
+            </div>
+            <div class="col">
+                {{ blog_node.IO_group_id_node }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Node IO group name :
+            </div>
+            <div class="col">
+                io_grp0
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Node partner node id :
+            </div>
+            <div class="col">
+                2
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Node partner node name :
+            </div>
+            <div class="col">
+                node2
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Config node :
+            </div>
+            <div class="col">
+                yes
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Node hardware :
+            </div>
+            <div class="col">
+                AF7
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Node iscsi name :
+            </div>
+            <div class="col">
+                iqn.1986-03.com.ibm
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Enclosure serial number :
+            </div>
+            <div class="col">
+                {{ blog_node.serial_number_enclosure }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Node service IP :
+            </div>
+            <div class="col">
+                {{ blog_node.service_IP_address }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Node gateway :
+            </div>
+            <div class="col">
+                10.3.17.190
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Node subnet mask :
+            </div>
+            <div class="col">
+                255.255.255.192
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Node machine type :
+            </div>
+            <div class="col">
+                {{ blog_node.product_MTM_enclosure }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                Node code level :
+            </div>
+            <div class="col">
+                8.3.1.1 (build 150.23.2002261453000)
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

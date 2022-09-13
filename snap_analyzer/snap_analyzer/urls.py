@@ -33,6 +33,7 @@ urlpatterns = [
     path('upload/', views.upload, name='upload'),
     path('<int:blog_id>/', views.detail, name='detail'),
     path('drive/<int:blog_id_drive>/', views.drive_detail, name='drive_detail'),
+    path('node/<int:blog_id_node>/', views.node_detail, name='node_detail'),
 ]
 
 urlpatterns += router.urls

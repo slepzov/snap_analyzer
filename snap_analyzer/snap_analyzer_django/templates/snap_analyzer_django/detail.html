@@ -53,7 +53,7 @@
             </table>
             </nav>
         </div>
-<table>
+<table align="center">
   <tr>
    <td>
 {% for enclosure in enclosures %}
@@ -84,41 +84,45 @@
             </tr>
     {% if enclosure.type == "control" %}
    <tr><td colspan="4">
+
                 <table align=center><tr>
-
-
+            {% for node in nodes %}
+            {% if enclosure.id_node_left == node.id_node %}
                 <td>
                     <table border="1">
-                        <tr onclick="window.open('node_info?id=63087301db3965fe757e33bc&node_id=1','_blank')">
-                            <td colspan=2 width="240" align="center" bgcolor="#DDDDDD">{{ enclosure.name_node_left }}</td>
-                        </tr><tr onclick="window.open('node_info?id=63087301db3965fe757e33bc&node_id=1','_blank')">
-                        {% if enclosure.status_node_left == "online" %}
-                            <td width="120" align="center"  class="bg-success" >{{ enclosure.status_node_left }}</td>
-                        {% elif enclosure.status_node_left == "offline" %}
-                            <td width="120" align="center"  class="bg-danger" >{{ enclosure.status_node_left }}</td>
+                        <tr onclick="window.open('{% url 'node_detail' node.id %}')">
+                            <td colspan=2 width="240" align="center" bgcolor="#DDDDDD">{{ node.name_node }}</td>
+                        </tr><tr onclick="window.open('{% url 'node_detail' node.id %}')">
+                        {% if node.status_node == "online" %}
+                            <td width="120" align="center"  class="bg-success" >{{ node.status_node }}</td>
+                        {% elif node.status_node == "offline" %}
+                            <td width="120" align="center"  class="bg-danger" >{{ node.status_node }}</td>
                         {% endif %}
-                            <td width="120" align="center">{{ enclosure.service_IP_address_node_left }}</td>
+                            <td width="120" align="center">{{ node.service_IP_address }}</td>
                         </tr>
                     </table>
                 </td>
+            {% endif %}
+            {% endfor %}
 
-
-
+            {% for node in nodes %}
+            {% if enclosure.id_node_right == node.id_node %}
                 <td>
                     <table border="1">
-                        <tr onclick="window.open('node_info?id=63087301db3965fe757e33bc&node_id=2','_blank')">
-                            <td colspan=2 width="240" align="center" bgcolor="#DDDDDD">{{ enclosure.name_node_right }}</td>
-                        </tr><tr onclick="window.open('node_info?id=63087301db3965fe757e33bc&node_id=2','_blank')">
-                        {% if enclosure.status_node_right == "online" %}
-                            <td width="120" align="center"  class="bg-success" >{{ enclosure.status_node_right }}</td>
-                        {% elif enclosure.status_node_right == "offline" %}
-                            <td width="120" align="center"  class="bg-danger" >{{ enclosure.status_node_right }}</td>
+                        <tr onclick="window.open('{% url 'node_detail' node.id %}')">
+                            <td colspan=2 width="240" align="center" bgcolor="#DDDDDD">{{ node.name_node }}</td>
+                        </tr><tr onclick="window.open('{% url 'node_detail' node.id %}')">
+                        {% if node.status_node == "online" %}
+                            <td width="120" align="center"  class="bg-success" >{{ node.status_node }}</td>
+                        {% elif node.status_node == "offline" %}
+                            <td width="120" align="center"  class="bg-danger" >{{ node.status_node }}</td>
                         {% endif %}
-                        <td width="120" align="center">{{ enclosure.service_IP_address_node_right }}</td>
+                        <td width="120" align="center">{{ node.service_IP_address }}</td>
                         </tr>
                     </table>
                 </td>
-
+            {% endif %}
+            {% endfor %}
 
                 </tr></table>
             </td></tr>
