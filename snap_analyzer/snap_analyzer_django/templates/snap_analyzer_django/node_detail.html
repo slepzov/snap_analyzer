@@ -31,7 +31,7 @@
                 Node WWNN :
             </div>
             <div class="col">
-                50050768100032D7
+                {{ blog_node.WWNN_node }}
             </div>
         </div>
         <div class="row">
@@ -55,7 +55,7 @@
                 Node IO group name :
             </div>
             <div class="col">
-                io_grp0
+                {{ blog_node.IO_group_name }}
             </div>
         </div>
         <div class="row">
@@ -63,7 +63,7 @@
                 Node partner node id :
             </div>
             <div class="col">
-                2
+                {{ blog_node.partner_node_id }}
             </div>
         </div>
         <div class="row">
@@ -71,7 +71,7 @@
                 Node partner node name :
             </div>
             <div class="col">
-                node2
+                {{ blog_node.partner_node_name }}
             </div>
         </div>
         <div class="row">
@@ -79,7 +79,7 @@
                 Config node :
             </div>
             <div class="col">
-                yes
+                {{ blog_node.config_node }}
             </div>
         </div>
         <div class="row">
@@ -95,7 +95,7 @@
                 Node iscsi name :
             </div>
             <div class="col">
-                iqn.1986-03.com.ibm
+                {{ blog_node.iscsi_name }}
             </div>
         </div>
         <div class="row">
@@ -119,7 +119,7 @@
                 Node gateway :
             </div>
             <div class="col">
-                10.3.17.190
+                {{ blog_node.service_gateway }}
             </div>
         </div>
         <div class="row">
@@ -127,7 +127,7 @@
                 Node subnet mask :
             </div>
             <div class="col">
-                255.255.255.192
+                {{ blog_node.service_subnet_mask }}
             </div>
         </div>
         <div class="row">
@@ -135,7 +135,7 @@
                 Node machine type :
             </div>
             <div class="col">
-                {{ blog_node.product_MTM_enclosure }}
+                {{ blog_node.product_mtm }}
             </div>
         </div>
         <div class="row">
@@ -143,7 +143,7 @@
                 Node code level :
             </div>
             <div class="col">
-                8.3.1.1 (build 150.23.2002261453000)
+                {{ blog_node.code_level }}
             </div>
         </div>
 

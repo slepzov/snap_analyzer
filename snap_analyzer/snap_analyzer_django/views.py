@@ -145,12 +145,33 @@ def pars(name):
                           "status_node_left": "Null",
                           "service_IP_address_node_left": "Null",
                           "IO_group_id_node_left": "Null",
+                          "WWNN_node_left": "Null",
+                          "IO_group_name_node_left": "Null",
+                          "partner_node_id_node_left": "Null",
+                          "partner_node_name_node_left": "Null",
+                          "config_node_left": "Null",
+                          "iscsi_name_node_left": "Null",
+                          "service_gateway_node_left": "Null",
+                          "service_subnet_mask_node_left": "Null",
+                          "product_mtm_node_left": "Null",
+                          "code_level_node_left": "Null",
 
                           "id_node_right": "Null",
                           "name_node_right": "Null",
                           "status_node_right": "Null",
                           "service_IP_address_node_right": "Null",
                           "IO_group_id_node_right": "Null",
+                          "WWNN_node_right": "Null",
+                          "IO_group_name_node_right": "Null",
+                          "partner_node_id_node_right": "Null",
+                          "partner_node_name_node_right": "Null",
+                          "config_node_right": "Null",
+                          "iscsi_name_node_right": "Null",
+                          "service_gateway_node_right": "Null",
+                          "service_subnet_mask_node_right": "Null",
+                          "product_mtm_node_right": "Null",
+                          "code_level_node_right": "Null",
+
                           }
 
         for svcinfo_box in log:
@@ -216,6 +237,27 @@ def pars(name):
                             expansion_dict["service_IP_address_node_left"] = parametr.split(":")[1]
                         if "IO_group_id:" in parametr and expansion_dict["IO_group_id_node_left"] == "Null":
                             expansion_dict["IO_group_id_node_left"] = parametr.split(":")[1]
+                        if "WWNN:" in parametr and expansion_dict["WWNN_node_left"] == "Null":
+                            expansion_dict["WWNN_node_left"] = parametr.split(":")[1]
+                        if "IO_group_name:" in parametr and expansion_dict["IO_group_name_node_left"] == "Null":
+                            expansion_dict["IO_group_name_node_left"] = parametr.split(":")[1]
+                        if "partner_node_id:" in parametr and expansion_dict["partner_node_id_node_left"] == "Null":
+                            expansion_dict["partner_node_id_node_left"] = parametr.split(":")[1]
+                        if "partner_node_name:" in parametr and expansion_dict["partner_node_name_node_left"] == "Null":
+                            expansion_dict["partner_node_name_node_left"] = parametr.split(":")[1]
+                        if "config_node:" in parametr and expansion_dict["config_node_left"] == "Null":
+                            expansion_dict["config_node_left"] = parametr.split(":")[1]
+                        if "iscsi_name:" in parametr and expansion_dict["iscsi_name_node_left"] == "Null":
+                            expansion_dict["iscsi_name_node_left"] = parametr.split(":")[1]
+                        if "service_gateway:" in parametr and expansion_dict["service_gateway_node_left"] == "Null":
+                            expansion_dict["service_gateway_node_left"] = parametr.split(":")[1]
+                        if "service_subnet_mask:" in parametr and expansion_dict["service_subnet_mask_node_left"] == "Null":
+                            expansion_dict["service_subnet_mask_node_left"] = parametr.split(":")[1]
+                        if "product_mtm:" in parametr and expansion_dict["product_mtm_node_left"] == "Null":
+                            expansion_dict["product_mtm_node_left"] = parametr.split(":")[1]
+                        if "code_level:" in parametr and expansion_dict["code_level_node_left"] == "Null":
+                            expansion_dict["code_level_node_left"] = parametr.split(":")[1]
+
                 if "lsnode -delim : " + expansion_dict["id_node_right"] in svcinfo_box:
                     for parametr in svcinfo_box.strip().split("\n"):
                         if "name:" in parametr and expansion_dict["name_node_right"] == "Null":
@@ -227,6 +269,27 @@ def pars(name):
                             expansion_dict["service_IP_address_node_right"] = parametr.split(":")[1]
                         if "IO_group_id:" in parametr and expansion_dict["IO_group_id_node_right"] == "Null":
                             expansion_dict["IO_group_id_node_right"] = parametr.split(":")[1]
+                        if "WWNN:" in parametr and expansion_dict["WWNN_node_right"] == "Null":
+                            expansion_dict["WWNN_node_right"] = parametr.split(":")[1]
+                        if "IO_group_name:" in parametr and expansion_dict["IO_group_name_node_right"] == "Null":
+                            expansion_dict["IO_group_name_node_right"] = parametr.split(":")[1]
+                        if "partner_node_id:" in parametr and expansion_dict["partner_node_id_node_right"] == "Null":
+                            expansion_dict["partner_node_id_node_right"] = parametr.split(":")[1]
+                        if "partner_node_name:" in parametr and expansion_dict["partner_node_name_node_right"] == "Null":
+                            expansion_dict["partner_node_name_node_right"] = parametr.split(":")[1]
+                        if "config_node:" in parametr and expansion_dict["config_node_right"] == "Null":
+                            expansion_dict["config_node_right"] = parametr.split(":")[1]
+                        if "iscsi_name:" in parametr and expansion_dict["iscsi_name_node_right"] == "Null":
+                            expansion_dict["iscsi_name_node_right"] = parametr.split(":")[1]
+                        if "service_gateway:" in parametr and expansion_dict["service_gateway_node_right"] == "Null":
+                            expansion_dict["service_gateway_node_right"] = parametr.split(":")[1]
+                        if "service_subnet_mask:" in parametr and expansion_dict["service_subnet_mask_node_right"] == "Null":
+                            expansion_dict["service_subnet_mask_node_right"] = parametr.split(":")[1]
+                        if "product_mtm:" in parametr and expansion_dict["product_mtm_node_right"] == "Null":
+                            expansion_dict["product_mtm_node_right"] = parametr.split(":")[1]
+                        if "code_level:" in parametr and expansion_dict["code_level_node_right"] == "Null":
+                            expansion_dict["code_level_node_right"] = parametr.split(":")[1]
+
         return expansion_dict
 
     for key in dict_id_enclosure:
@@ -262,6 +325,17 @@ def pars(name):
                 status_node=polka["status_node_left"],
                 service_IP_address=polka["service_IP_address_node_left"],
                 IO_group_id_node=polka["IO_group_id_node_left"],
+                WWNN_node=polka["WWNN_node_left"],
+                IO_group_name=polka["IO_group_name_node_left"],
+                partner_node_id=polka["partner_node_id_node_left"],
+                partner_node_name=polka["partner_node_name_node_left"],
+                config_node=polka["config_node_left"],
+                iscsi_name=polka["iscsi_name_node_left"],
+                service_gateway=polka["service_gateway_node_left"],
+                service_subnet_mask=polka["service_subnet_mask_node_left"],
+                product_mtm=polka["product_mtm_node_left"],
+                code_level=polka["code_level_node_left"],
+
             )
             node_left.save()
             node_right = NodeModel(
@@ -273,6 +347,16 @@ def pars(name):
                 status_node=polka["status_node_right"],
                 service_IP_address=polka["service_IP_address_node_right"],
                 IO_group_id_node=polka["IO_group_id_node_right"],
+                WWNN_node=polka["WWNN_node_right"],
+                IO_group_name=polka["IO_group_name_node_right"],
+                partner_node_id=polka["partner_node_id_node_right"],
+                partner_node_name=polka["partner_node_name_node_right"],
+                config_node=polka["config_node_right"],
+                iscsi_name=polka["iscsi_name_node_right"],
+                service_gateway=polka["service_gateway_node_right"],
+                service_subnet_mask=polka["service_subnet_mask_node_right"],
+                product_mtm=polka["product_mtm_node_right"],
+                code_level=polka["code_level_node_right"],
             )
             node_right.save()
     all_drive = drive_parsing(log, dict_id_enclosure, timestamp)

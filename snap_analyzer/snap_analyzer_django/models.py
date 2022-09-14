@@ -40,6 +40,17 @@ class NodeModel(models.Model):
     status_node = models.CharField(max_length=40)
     service_IP_address = models.CharField(max_length=40)
     IO_group_id_node = models.CharField(max_length=40)
+    WWNN_node = models.CharField(max_length=40)
+    IO_group_name = models.CharField(max_length=40)
+    partner_node_id = models.CharField(max_length=40)
+    partner_node_name = models.CharField(max_length=40)
+    config_node = models.CharField(max_length=40)
+    iscsi_name = models.CharField(max_length=40)
+    service_gateway = models.CharField(max_length=40)
+    service_subnet_mask = models.CharField(max_length=40)
+    product_mtm = models.CharField(max_length=40)
+    code_level = models.CharField(max_length=40)
+
 
 class DriveModel(models.Model):
     serial_number_cluster = models.CharField(max_length=10)
