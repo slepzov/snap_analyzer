@@ -2,22 +2,21 @@
 
 {% block content %}
 
-
-<div>
-
-    <div class="btn btn-primary btn-lg btn-block">
-        mtm	sn	codelevel	timestamp
-    </div>
-
+<table class='table table-striped text-center'>
+    <tr>
+        <th>mtm</th>
+        <th>sn</th>
+        <th>code level</th>
+        <th>timestamp</th>
+    </tr>
     {% for cluster in clusters %}
-    <a href="{% url 'detail' cluster.id %}" class="btn btn-light btn-lg btn-block">
-
-        {{ cluster.type }} {{ cluster.serial_number_cluster }} {{ cluster.code_level }} {{ cluster.date_timestamp }}
-
-    </a>
+        <tr style="cursor: pointer;" onclick="location.href='{% url 'detail' cluster.id %}'">
+            <td>{{ cluster.type }}</td>
+            <td>{{ cluster.serial_number_cluster }}</td>
+            <td>{{ cluster.code_level }}</td>
+            <td>{{ cluster.date_timestamp }}</td>
+        </tr>
     {% endfor %}
-</div>
-
-
+</table>
 
 {% endblock %}

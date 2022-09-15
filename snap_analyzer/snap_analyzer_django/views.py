@@ -5,6 +5,7 @@ import tarfile
 
 from django.shortcuts import render, get_object_or_404
 from django.core.files.storage import FileSystemStorage
+from django.utils.datastructures import MultiValueDictKeyError
 from rest_framework.viewsets import ModelViewSet
 
 from snap_analyzer_django.models import GeneralCluster, EnclosureModel, DriveModel, NodeModel
@@ -12,14 +13,19 @@ from snap_analyzer_django.serializers import ClusterSerializer
 
 
 def upload(request):
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
-        fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
-        general_information = pars(filename)
-        return render(request, 'snap_analyzer_django/upload.html', {'general_information': general_information})
-    return render(request, 'snap_analyzer_django/upload.html')
-
+    try:
+        if request.method == 'POST' and request.FILES['myfile']:
+            myfile = request.FILES['myfile']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            general_information = pars(filename)
+            return render(request, 'snap_analyzer_django/upload.html', {'general_information': general_information})
+        return render(request, 'snap_analyzer_django/upload.html')
+    except tarfile.ReadError:
+        os.remove(myfile.name)
+        return render(request, 'snap_analyzer_django/upload.html')
+    except MultiValueDictKeyError:
+        return render(request, 'snap_analyzer_django/upload.html')
 
 class ClusterView(ModelViewSet):
     queryset = GeneralCluster.objects.all()

@@ -1,11 +1,16 @@
 {% extends 'snap_analyzer_django/base.html' %}
 
 {% block content %}
-<h1>Upload snap file</h1>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type="file" name="myfile">
-    <button type="submit">Upload</button>
-  </form>
-
+<table align="center">
+    <tr>
+        <td>
+            <h2>Upload snap file</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="myfile">
+                <button type="submit">Upload</button>
+            </form>
+        </td>
+    </tr>
+</table>
 {% endblock %}

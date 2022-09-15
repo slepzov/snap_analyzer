@@ -90,9 +90,9 @@
             {% if enclosure.id_node_left == node.id_node %}
                 <td>
                     <table border="1">
-                        <tr onclick="window.open('{% url 'node_detail' node.id %}')">
+                        <tr style="cursor: pointer;" onclick="window.open('{% url 'node_detail' node.id %}')">
                             <td colspan=2 width="240" align="center" bgcolor="#DDDDDD">{{ node.name_node }}</td>
-                        </tr><tr onclick="window.open('{% url 'node_detail' node.id %}')">
+                        </tr><tr style="cursor: pointer;" onclick="window.open('{% url 'node_detail' node.id %}')">
                         {% if node.status_node == "online" %}
                             <td width="120" align="center"  class="bg-success" >{{ node.status_node }}</td>
                         {% elif node.status_node == "offline" %}
@@ -109,9 +109,9 @@
             {% if enclosure.id_node_right == node.id_node %}
                 <td>
                     <table border="1">
-                        <tr onclick="window.open('{% url 'node_detail' node.id %}')">
+                        <tr style="cursor: pointer;" onclick="window.open('{% url 'node_detail' node.id %}')">
                             <td colspan=2 width="240" align="center" bgcolor="#DDDDDD">{{ node.name_node }}</td>
-                        </tr><tr onclick="window.open('{% url 'node_detail' node.id %}')">
+                        </tr><tr style="cursor: pointer;" onclick="window.open('{% url 'node_detail' node.id %}')">
                         {% if node.status_node == "online" %}
                             <td width="120" align="center"  class="bg-success" >{{ node.status_node }}</td>
                         {% elif node.status_node == "offline" %}
@@ -128,7 +128,7 @@
             </td></tr>
         {% endif %}
 
-        {% if "-92G" in enclosure.product_MTM_enclosure %}
+        {% if "-92G" in enclosure.product_MTM_enclosure or "-92F" in enclosure.product_MTM_enclosure%}
             <tr><td colspan="4" align="center">
               <table border=1><tr>
                     {% for drive in drives %}
