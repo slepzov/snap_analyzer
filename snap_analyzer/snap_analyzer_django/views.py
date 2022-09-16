@@ -471,3 +471,4 @@ def parse_property_drive(log, drive_id, wanted_property):
             for parametr in svcinfo_box.strip().split("\n"):
                 if wanted_property in parametr:
                     return parametr.split(":")[1]
+    return " "
