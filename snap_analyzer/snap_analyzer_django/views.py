@@ -6,10 +6,8 @@ import tarfile
 from django.shortcuts import render, get_object_or_404
 from django.core.files.storage import FileSystemStorage
 from django.utils.datastructures import MultiValueDictKeyError
-from rest_framework.viewsets import ModelViewSet
 
 from snap_analyzer_django.models import GeneralCluster, EnclosureModel, DriveModel, NodeModel
-from snap_analyzer_django.serializers import ClusterSerializer
 
 
 def upload(request):
@@ -26,10 +24,6 @@ def upload(request):
         return render(request, 'snap_analyzer_django/upload.html')
     except MultiValueDictKeyError:
         return render(request, 'snap_analyzer_django/upload.html')
-
-class ClusterView(ModelViewSet):
-    queryset = GeneralCluster.objects.all()
-    serializer_class = ClusterSerializer
 
 
 def parser(request):
@@ -239,7 +233,7 @@ def pars(name):
                         if "status:" in parametr and expansion_dict["status_node_left"] == "Null":
                             expansion_dict["status_node_left"] = parametr.split(":")[1]
                         if "service_IP_address:" in parametr and expansion_dict[
-                                "service_IP_address_node_left"] == "Null":
+                            "service_IP_address_node_left"] == "Null":
                             expansion_dict["service_IP_address_node_left"] = parametr.split(":")[1]
                         if "IO_group_id:" in parametr and expansion_dict["IO_group_id_node_left"] == "Null":
                             expansion_dict["IO_group_id_node_left"] = parametr.split(":")[1]
@@ -257,7 +251,8 @@ def pars(name):
                             expansion_dict["iscsi_name_node_left"] = parametr.split(":")[1]
                         if "service_gateway:" in parametr and expansion_dict["service_gateway_node_left"] == "Null":
                             expansion_dict["service_gateway_node_left"] = parametr.split(":")[1]
-                        if "service_subnet_mask:" in parametr and expansion_dict["service_subnet_mask_node_left"] == "Null":
+                        if "service_subnet_mask:" in parametr and expansion_dict[
+                            "service_subnet_mask_node_left"] == "Null":
                             expansion_dict["service_subnet_mask_node_left"] = parametr.split(":")[1]
                         if "product_mtm:" in parametr and expansion_dict["product_mtm_node_left"] == "Null":
                             expansion_dict["product_mtm_node_left"] = parametr.split(":")[1]
@@ -271,7 +266,7 @@ def pars(name):
                         if "status:" in parametr and expansion_dict["status_node_right"] == "Null":
                             expansion_dict["status_node_right"] = parametr.split(":")[1]
                         if "service_IP_address:" in parametr and expansion_dict[
-                                "service_IP_address_node_right"] == "Null":
+                            "service_IP_address_node_right"] == "Null":
                             expansion_dict["service_IP_address_node_right"] = parametr.split(":")[1]
                         if "IO_group_id:" in parametr and expansion_dict["IO_group_id_node_right"] == "Null":
                             expansion_dict["IO_group_id_node_right"] = parametr.split(":")[1]
@@ -281,7 +276,8 @@ def pars(name):
                             expansion_dict["IO_group_name_node_right"] = parametr.split(":")[1]
                         if "partner_node_id:" in parametr and expansion_dict["partner_node_id_node_right"] == "Null":
                             expansion_dict["partner_node_id_node_right"] = parametr.split(":")[1]
-                        if "partner_node_name:" in parametr and expansion_dict["partner_node_name_node_right"] == "Null":
+                        if "partner_node_name:" in parametr and expansion_dict[
+                            "partner_node_name_node_right"] == "Null":
                             expansion_dict["partner_node_name_node_right"] = parametr.split(":")[1]
                         if "config_node:" in parametr and expansion_dict["config_node_right"] == "Null":
                             expansion_dict["config_node_right"] = parametr.split(":")[1]
@@ -289,7 +285,8 @@ def pars(name):
                             expansion_dict["iscsi_name_node_right"] = parametr.split(":")[1]
                         if "service_gateway:" in parametr and expansion_dict["service_gateway_node_right"] == "Null":
                             expansion_dict["service_gateway_node_right"] = parametr.split(":")[1]
-                        if "service_subnet_mask:" in parametr and expansion_dict["service_subnet_mask_node_right"] == "Null":
+                        if "service_subnet_mask:" in parametr and expansion_dict[
+                            "service_subnet_mask_node_right"] == "Null":
                             expansion_dict["service_subnet_mask_node_right"] = parametr.split(":")[1]
                         if "product_mtm:" in parametr and expansion_dict["product_mtm_node_right"] == "Null":
                             expansion_dict["product_mtm_node_right"] = parametr.split(":")[1]

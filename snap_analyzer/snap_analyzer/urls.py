@@ -1,30 +1,8 @@
-"""snap_analyzer URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
-from rest_framework.routers import SimpleRouter
 
 from snap_analyzer_django import views
-from snap_analyzer_django.views import ClusterView
 
-app_name = 'blog'
-
-router = SimpleRouter()
-
-router.register('api/clusters', ClusterView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,5 +13,3 @@ urlpatterns = [
     path('drive/<int:blog_id_drive>/', views.drive_detail, name='drive_detail'),
     path('node/<int:blog_id_node>/', views.node_detail, name='node_detail'),
 ]
-
-urlpatterns += router.urls
