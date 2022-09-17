@@ -439,9 +439,16 @@ def drive_parsing(log, dict_id_enclosure, timestamp):
                 info_dict_drive["drive_status"] = lsdrive_book[1]
                 info_dict_drive["drive_use"] = lsdrive_book[3]
                 info_dict_drive["capacity"] = lsdrive_book[5]
-                info_dict_drive["drive_slot_id"] = int(lsdrive_book[10])
-                info_dict_drive["id_enclosure"] = lsdrive_book[9]
-                info_dict_drive["serial_number_enclosure"] = dict_id_enclosure[info_dict_drive["id_enclosure"]]
+                if lsdrive_book[10] != "":
+                    info_dict_drive["drive_slot_id"] = int(lsdrive_book[10])
+                else:
+                    info_dict_drive["drive_slot_id"] = len(lsdrive)
+                if lsdrive_book[9] != "":
+                    info_dict_drive["id_enclosure"] = lsdrive_book[9]
+                    info_dict_drive["serial_number_enclosure"] = dict_id_enclosure[info_dict_drive["id_enclosure"]]
+                else:
+                    info_dict_drive["id_enclosure"] = " "
+                    info_dict_drive["serial_number_enclosure"] = " "
                 info_dict_drive["timestamp"] = timestamp
                 info_dict_drive["vendor_id"] = parse_property_drive(log, info_dict_drive["drive_id"], "vendor_id:")
                 info_dict_drive["product_id"] = parse_property_drive(log, info_dict_drive["drive_id"], "product_id:")
