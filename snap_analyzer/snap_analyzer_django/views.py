@@ -19,7 +19,7 @@ def upload(request):
             general_information = pars(filename)
             return render(request, 'snap_analyzer_django/upload.html', {'general_information': general_information})
         return render(request, 'snap_analyzer_django/upload.html')
-    except tarfile.ReadError:
+    except (tarfile.ReadError, FileNotFoundError):
         os.remove(myfile.name)
         return render(request, 'snap_analyzer_django/upload.html')
     except MultiValueDictKeyError:
